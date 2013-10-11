@@ -53,10 +53,9 @@ describe Apis::ApiController do
   #get "app_publics/:partner_app_id", :to=>'api#app_publics'
   describe "GET app_publics" do
   	it "returns public users with a partner app" do
-      #partner = Partner.create :stormpath_id => 'apitester'
       partner_app = PartnerApp.create! :partner_id => @partner.id
       publics = 5.times.collect { Public.create! }
-      app_of_publics = publics.collect { |publik| AppOfPublic.create :public_id => publik.id, :partner_app_id => partner_app.id }.flatten
+      app_of_publics = publics.collect { |publik| AppOfPublic.create :public_id => publik.id, :partner_app_id => partner_app.id }
   		get :app_publics, {:partner_app_id => partner_app.id}, nil, nil
   		response.body.should == app_of_publics.map{ |x| x.public_id }.uniq.sort.to_json.delete(' ')
   	end
@@ -64,11 +63,10 @@ describe Apis::ApiController do
     #get "site_publics/:site", :to=>'api#site_publics'
     describe "GET site_publics" do
     	it "returns public users with a partner site" do
-        #partner = Partner.create :stormpath_id => 'apitester'
         partner_site = PartnerSite.create! :partner_id => @partner.id
         publics = 5.times.collect { Public.create! }
-        site_of_publics = publics.collect { |publik| SiteOfPublic.create :public_id => publik.id, :partner_site_id => partner_site.id }.flatten
-        get :site_publics, {:partner_site_id => 1}, nil, nil
+        site_of_publics = publics.collect { |publik| SiteOfPublic.create :public_id => publik.id, :partner_site_id => partner_site.id }
+        get :site_publics, {:partner_site_id => partner_site.id}, nil, nil
         response.body.should == site_of_publics.map{ |x| x.public_id }.uniq.sort.to_json.delete(' ')
     	end
     end

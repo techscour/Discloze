@@ -14,6 +14,7 @@ class Apis::ApiController < ActionController::Base
 
 	#get "site_publics/:site_id", :to=>'api#site_publics'
 	def site_publics
+
 		site = PartnerSite.find(params['partner_site_id']) 
 		unless site && site.partner_id == @partner_id 
 			render :json => 'not found' , :status => :not_found
