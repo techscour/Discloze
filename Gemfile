@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
-
+ruby "2.0.0"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -51,6 +51,7 @@ group :test, :development do
   	gem 'pry-stack_explorer'
   	gem 'simplecov', require: false
   	gem "brakeman", require: false
+  	gem 'sqlite3'
 end 
 
 # Use ActiveModel has_secure_password
@@ -64,8 +65,14 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+gem 'rb-readline'
 gem 'stormpath-sdk', '~> 1.0.0.beta.2'
 gem 'stormpath-omniauth', '~> 1.0.0.beta.3'
 gem 'kaminari'
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 gem 'pry'
+gem 'rails_12factor', group: :production
+group :production do
+	gem 'pg'
+	gem 'thin'
+end
