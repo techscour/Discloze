@@ -1,0 +1,31 @@
+	<div class="well css-form" >
+		<form role="form" name='signInForm' method='POST' action='<%= session_authorize_url %>'>
+			<h1>Sign In</h1>
+			<div class="form-group">
+				<label for="email">Email Address</label>
+				<input type="email" class="form-control" name="email" required email id="email"
+				placeholder="Enter Email Address" ng-model='email'>
+			</div>
+			<div class="alert alert-danger" ng-show="signInForm.email.$invalid && signInForm.email.$dirty"
+			>Please Enter A Valid Email Address </div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" class="form-control" name="password" required password id="password"
+				ng-minlength='3' ng-maxlength='20'
+				placeholder="Password" ng-model="password">
+
+			</div>
+			<div class="alert alert-danger" ng-show="signInForm.password.$invalid && signInForm.password.$dirty"
+			>Please Enter A Valid Password</div>
+			<div class="checkbox">
+				<label>
+					<input name='remember' type="checkbox"> Remember Me
+				</label>
+			</div>
+			<input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+			<button type="submit" ng-disabled="!signInForm.$valid" class="btn btn-default">Sign In</button>
+			<div>
+				<a href="<%= session_preset_url %>"><small>forgot your password?</small></a>
+			</div>
+		</form>
+	</div>

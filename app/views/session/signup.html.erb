@@ -1,0 +1,102 @@
+
+<script type="text/javascript">
+	var signup_controller = function($scope) {
+		$scope.user  = '<%= values['user'] %>';	
+		$scope.email = '<%= values['email'] %>';
+		$scope.pass1  = '<%= values['pass1'] %>';	
+		$scope.pass2 = '<%= values['pass2'] %>';
+		$scope.first  = '<%= values['first'] %>';
+		$scope.last  = '<%= values['last'] %>';
+		$scope.zip = parseInt('<%= values['zip'] %>');
+		$scope.year  = parseInt('<%= values['year'] %>');
+		$scope.gender  = '<%= values['gender'] %>';
+		if ($scope.user != '')
+		{
+			$('#signUpForm').addClass('ng-dirty');
+		}
+	}
+</script>
+<div class="well css-form" ng-controller='signup_controller' >
+	<form role="form" name='signUpForm' id='signUpForm' method='POST' 
+		action='<%= session_add_url %>'>
+		<h1>Tell Us About Yourself</h1>
+		<div class="form-group">
+			<label for="user">Your User Name</label>
+			<input type="text" class="form-control" name="user" required text id="user"
+			ng-minlength='3' ng-maxlength='20'
+			placeholder="Your User Name" ng-model="user">
+		</div>
+		<div class="alert alert-danger" ng-show="signUpForm.user.$invalid && signUpForm.user.$dirty"
+		>Please Enter A Valid User Name</div>
+		<div class="form-group">
+			<label for="email">Your Email Address</label>
+			<input type="email" class="form-control" name="email" required email id='email'
+			placeholder="Your Email" ng-model="email">
+		</div>
+		<div class="alert alert-danger" ng-show="signUpForm.email.$invalid && signUpForm.email.$dirty"
+		>Please Enter A Valid Email Address</div>
+		<div class="form-group">
+			<label for="pass1">Your Password</label>
+			<input type="password" class="form-control" name="pass1" required password id="pass1"
+			ng-minlength='3' ng-maxlength='20'
+			placeholder="New Password" ng-model="pass1">
+		</div>
+		<div class="alert alert-danger" ng-show="signUpForm.pass1.$invalid && signUpForm.pass1.$dirty"
+		>Please Enter A Valid Password</div>
+		<div class="form-group">
+			<label for="pass2">Confirm Your Password</label>
+			<input type="password" class="form-control" name="pass2" required password id="pass2"
+			ng-minlength='3' ng-maxlength='20'
+			placeholder="Confirm New Password" ng-model="pass2">
+		</div>
+		<div class="alert alert-danger" ng-show="signUpForm.pass2.$invalid && signUpForm.pass2.$dirty"
+		>Please Enter A Valid Password</div>
+		<div class="alert alert-danger" ng-show="signUpForm.pass1.$valid && signUpForm.pass2.$valid && pass1!=pass2">Passwords Must Match</div>
+		<div class="form-group">
+			<label for="first">Your Fist Name</label>
+			<input type="text" class="form-control" name="first" required text id="first"
+			ng-minlength='3' ng-maxlength='20'
+			placeholder="Your First Name" ng-model="first">
+		</div>
+		<div class="alert alert-danger" ng-show="signUpForm.first.$invalid && signUpForm.first.$dirty"
+		>Please Enter A Valid First Name</div>
+		<div class="form-group">
+			<label for="last">Your Last Name</label>
+			<input type="text" class="form-control" name="last" required text id="last"
+			ng-minlength='3' ng-maxlength='20'
+			placeholder="Your Last Name" ng-model="last">
+		</div>
+		<div class="alert alert-danger" ng-show="signUpForm.last.$invalid && signUpForm.last.$dirty"
+		>Please Enter A Valid Last Name</div>
+		<div class="form-group">
+			<label for="zip">Your Zip Code (optional)</label>
+			<input type="number" class="form-control" name="zip"  number id="zip"
+			ng-minlength='5' ng-maxlength='5'
+			placeholder="Your Zip Code" ng-model="zip">
+		</div>
+		<div class="alert alert-danger" ng-show="signUpForm.zip.$invalid && signUpForm.zip.$dirty"
+		>Please Correct Your Zip Code</div>
+		<div class="form-group">
+			<label for="year">Your Birth Year (optional)</label>
+			<input type="number" class="form-control" name="year"  number id="year"
+			ng-minlength='4' ng-maxlength='4'
+			placeholder="Your Birth Year" ng-model="year">
+		</div>
+		<div class="alert alert-danger" ng-show="signUpForm.year.$invalid && signUpForm.year.$dirty"
+		>Please Correct Your Birth Year</div>
+		<div class="form-group">
+			<label for="gender">Your Gender (optional)<br/>
+			<input type="radio" selected='true' name="gender" ng-model="gender" id='unspecified' value="empty" />not specified&nbsp;
+			<input type="radio" name="gender"  ng-model="gender" value="male" id='male' />male&nbsp;
+			<input type="radio" name="gender"  ng-model="gender" value="female" id='female' />female</label><br/>
+		</div>
+		<div class="checkbox">
+			<label>
+				<input name='remember' type="checkbox" ng-model='agree'> I have read and agree to the terms and conditions of this site.
+			</label>
+		</div>
+		<input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+		<div class="alert alert-danger" ng-show="signUpForm.$valid && !agree">You must agree to the terms and conditions.</div>
+		<button type="submit" ng-disabled="signUpForm.$invalid || signUpForm.$pristine || !agree || pass1!=pass2" class="btn btn-success">Create Your Account</button>
+	</form>
+</div>

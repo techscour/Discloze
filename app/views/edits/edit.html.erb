@@ -1,0 +1,386 @@
+<style type="text/css">
+.gridStyle {
+  border: 1px solid rgb(212,212,212);
+  width: 800px; 
+  height: 500px;
+}
+
+.css-form input.ng-invalid.ng-dirty {
+  background-color: #FA787E;
+}
+
+.css-form input.ng-valid.ng-dirty {
+  background-color: #78FA89;
+}
+</style>
+<%= javascript_tag do %>
+var data = '<%= j data %>';
+
+<% end %>
+<div id="hiding" style='display:none'></div>
+<script type="text/javascript">
+
+//theModule.controller('MyCtrl', function($scope, $http) {
+
+  var MyCtrl =function($scope, $http) {
+
+    $scope.visibility = '<%= visibility %>';
+    $scope.name = '<%= name %>';
+    $scope.user_id = '<%= user_id %>';
+    $scope.id = '<%= id %>';
+    $scope.rating = 5;
+    $scope.item = '';
+    $scope.item_dirty = false;
+    $scope.rating_dirty = false;
+    $scope.editing = false;
+    $scope.duplicate = false;
+    $scope.alertMessage = '';
+    $scope.edits = 0;
+    $scope.mail_to = '';
+    $scope.subject = '';
+    $scope.body = '';
+    $scope.mySelections = [];
+    $scope.columns = [  
+    {field:'rating', displayName: 'Rating'},
+    {field:'item', displayName: 'Item'}
+    ];
+    $scope.sortInfo = [{ fields:[('item')], directions: [('asc')]}];
+
+    data = '{"tuples": ' + $('#hiding').html(data).text() + '}';
+    console.log(data); 
+    data = JSON.parse(data).tuples;
+    if (data == '""') data = [];
+    console.log(JSON.stringify(data));
+    $scope.theData = data;
+    if (!$scope.$$phase) {
+      $scope.$apply();
+    }
+
+    $scope.gridOptions = {
+      data: 'theData',
+      columnDefs: $scope.columns,
+      selectedItems: $scope.mySelections,
+      multiSelect: false
+    };
+    $scope.download = function()
+    {
+      alert('download');
+    };
+
+    $scope.rating_change = function()
+    {
+      $scope.rating_dirty = true;
+    };
+
+    $scope.item_change = function()
+    {
+      $scope.item_dirty = true;
+      $scope.editing = false;
+      $scope.duplicate = false;
+    };
+
+    $scope.selected = function()
+    {
+      $scope.item = $scope.mySelections[0].item;
+      $scope.rating = $scope.mySelections[0].rating;
+      $scope.editing = true;
+      $scope.rating_dirty = false;
+      $scope.item_dirty = false;
+    };
+
+    $scope.destroy = function()
+    {
+      var url = '/publics/' + $scope.user_id + '/lists/' + $scope.id;
+      $scope.deleteUrl(url);
+    };
+
+    $scope.save = function()
+    {
+      var saved = { name: $scope.name, visibility: $scope.visibility, 
+        values: $scope.theData};
+        var url = '/publics/' + $scope.user_id + '/lists/' + $scope.id;
+        $scope.putUrl(url,saved);
+        $scope.edits = 0;
+        window.onbeforeunload = null;
+      };
+
+      $scope.send = function()
+      {
+        var saved = {mail_to: $scope.mail_to, subject: $scope.subject, body: $scope.body,
+          list: $scope.name, visibility: $scope.visibility, data: $scope.data};
+          var url = '/publics/' + $scope.user_id + '/emails';
+          $scope.postUrl(url,saved);
+          $scope.edits = 0;
+          window.onbeforeunload = null;
+        };
+
+        $scope.email = function()
+        {
+          $scope.clearEmailForm();
+          $scope.mail_to = '';
+          $scope.subject = 'My ' + $scope.name + ' List';
+          $scope.body = '';
+          $('#emailModal').modal('show');
+        };
+
+        $scope.clearEmailForm = function()
+        {
+          $scope.clearForm($scope.emailForm,'#emailForm');
+          $scope.clearField($scope.emailForm.mail_to,'#mail_to');
+          $scope.clearField($scope.emailForm.subject,'#subject');
+          $scope.clearField($scope.emailForm.message,'#message');
+        };
+
+        $scope.add = function()
+        {
+         var index = $scope.find();
+         if (index != -1)
+         {
+          $scope.duplicate = true;
+          return; 
+        }
+        var added = {item: $scope.item, rating: parseInt($scope.rating)};
+        $scope.theData.unshift(added);
+        $scope.edits += 1;
+        if ($scope.edits == 1) {
+          window.onbeforeunload = function(e) {
+            return 'Dialog text here.';
+          };
+        }
+        $scope.clear_item_form();
+      };
+
+      $scope.update = function()
+      {
+        var index = $scope.find();
+        var element = $scope.theData[index];
+        element.item = $scope.item;
+        element.rating = parseInt($scope.rating);
+        $scope.edits += 1;
+        if ($scope.edits == 1) {
+
+          window.onbeforeunload = function(e) {
+            return 'Dialog text here.';
+          };
+        }
+      };
+
+      $scope.find = function() 
+      {
+        for (i in $scope.theData)
+        {
+          if ($scope.theData[i].item == $scope.item) return i;
+        }
+        return -1;
+      };
+
+      $scope.delete = function()
+      {
+        var index = $scope.find();
+        $scope.theData.splice(index, 1);
+        $scope.clear();
+      };
+
+      $scope.clear_item_form = function()
+      {
+        $scope.rating = 5;
+        $scope.item = '';
+        $scope.clearForm($scope.itemForm,'#itemForm');
+        $scope.clearField($scope.itemForm.item,'#item');
+        $scope.editing = false;
+        $scope.rating_dirty = false;
+        $scope.duplicate = false;
+        $scope.item_dirty = false;
+      };
+
+      $scope.clearForm = function(form, formSelector)
+      {
+        $(formSelector).addClass('ng-pristine');
+        $(formSelector).removeClass('ng-dirty');
+        form.$pristine = true;
+        form.$dirty = false;
+        form.$valid = true;
+        form.$invalid = false;
+      };
+
+      $scope.clearField = function(field, fieldSelector)
+      {
+        $(fieldSelector).addClass('ng-pristine');
+        $(fieldSelector).removeClass('ng-dirty');
+        field.$pristine = true;
+        field.$dirty = false;
+        field.$valid = true;
+        field.$invalid = false;
+      };
+
+      $scope.deleteUrl = function (url) {
+          //alert(url);
+          setTimeout(function () {
+            $http.delete(url).success(function (a) {
+              $scope.alertMessage = 'Deleted';
+              $('#alertModal').modal('show'); 
+              window.onbeforeunload = null;
+              window.location = '<%= root_url %>';
+            }).error(function(a) {
+              $scope.alertMessage = 'Delete Failed';
+              $('#alertModal').modal('show'); 
+            })
+          }, 100);
+        };
+        $scope.putUrl = function (url,data) {
+          //alert([url,JSON.stringify(data)]);
+          setTimeout(function () {
+            $http.put(url,data).success(function () {
+              $scope.alertMessage = 'Updated';
+              $('#alertModal').modal('show'); 
+              window.onbeforeunload = null;
+            }).error(function(a,b,c) {
+              $scope.alertMessage = 'Update Failed';
+              $('#alertModal').modal('show'); 
+            })
+          }, 100);
+        };
+        $scope.postUrl = function (url,data) {
+          //alert([url,data]);
+          setTimeout(function () {
+            $http.post(url,data).success(function () {
+              $scope.alertMessage = 'Mail Sent';
+              $('#alertModal').modal('show'); 
+              window.onbeforeunload = null;
+            }).error(function(a,b,c) {
+              $scope.alertMessage = 'Send Mail Failed';
+              $('#alertModal').modal('show'); 
+            })
+          }, 100);
+        };
+        $scope.$watch('mySelections', function (newVal, oldVal) {
+          if (newVal !== oldVal) $scope.selected(); }, true);
+
+
+   
+      }
+
+      </script>
+
+      <div ng-controller='MyCtrl' >
+        <div class="well">
+          <div>
+            <h1 style='display:inline-block;'><%= name %>
+              <select ng-model='visibility' style='width:100;vertical-align:middle' 
+              ng-options="o for o in ['Offers','Public','Protected','Private']">
+            </select>
+            <input id='btnDownload' type='button' value='Save' ng-click='save()' 
+            class='btn btn-success' style='display:inline-block;'>
+            <input id='btnDownload' type='button' value='Download' ng-click='download()' 
+            class='btn btn-success' style='display:inline-block;'>
+            <input id='btnEmail' type='button' value='Email' ng-click='email()' 
+            class='btn btn-success' style='display:inline-block;'>
+          </div>
+
+          <form id='itemForm' name='itemForm' class='css-form' >
+            <div class="form-group">
+              <label for='item'>Item</label>
+              <input type='text' class='form-control' name='item' required id='item'
+              placeholder="Enter an Item" ng-model='item' ng-change='item_change()'>
+            </div>
+            <div class="form-group">
+              <div class="alert alert-danger" ng-show="itemForm.item.$invalid && itemForm.item.$dirty" 
+              >Please Enter An Item 
+            </div>
+            <div class="form-group">
+              <label for="rating">Rating</label>
+              <select ng-model='rating' name='rating' style='' ng-change='rating_change()'>
+                <option>10</option>
+                <option>9</option>
+                <option>8</option>
+                <option>7</option>
+                <option>6</option>
+                <option>5</option>
+                <option>4</option>
+                <option>3</option>
+                <option>2</option>
+                <option>1</option>
+                <option>0</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <input id='btnUpdate' type='button' value='Update Item' ng-click='update()' 
+            ng-disabled='!editing'class='btn btn-success' style='display:inline-block;'>
+            <input id='btnAdd' type='button' value='Add Item' ng-click='add()' 
+            ng-disabled='editing || item.length == 0' class='btn btn-success' style='display:inline-block;'>
+
+            <input id='btnClear' type='button' value='Clear Form' ng-click='clear_item_form()' 
+            class='btn btn-success' style='display:inline-block;'>
+
+            <input id='btnDelete' type='button' value='Delete Item' ng-click='delete()' 
+            ng-disabled='!editing' class='btn btn-danger' style='display:inline-block;'>
+          </div>
+          <div>&nbsp;</div>
+          <div class="alert alert-danger" ng-show="duplicate">Item {{item}} is a Duplicate </div>
+        </form> 
+
+        <div>&nbsp;</div>
+        <div class="gridStyle" ng-grid="gridOptions"></div>
+        <div>&nbsp;</div>
+        <div>
+          <h2>Delete This List Forever</h2>
+          <button type="button" class="btn btn-danger" ng-click='destroy()'>Delete</button>
+        </div>
+        <div id="emailModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          </div>
+          <div class="modal-body" id='htmlContent'>
+            <form id='emailForm' name='emailForm' class='css-form' >
+
+              <div class="form-group">
+                <label for='mail_to'>Mail To</label>
+                <input type='email' class='form-control' name='mail_to' required id='mail_to' email 
+                style='width:400px'placeholder="Enter an Email Address" ng-model='mail_to' >
+              </div>
+              <div class="form-group">
+                <div class="alert alert-danger" ng-show="emailForm.mail_to.$invalid && emailForm.mail_to.$dirty" 
+                >Please Enter An Email Address </div>
+              </div>
+
+              <div class="form-group">
+                <label for='subject'>Subject</label>
+                <input type='text' class='form-control' name='subject' required id='item' 
+                style='width:400px'placeholder="Enter a Subject" style='width:300px' 
+                ng-model='subject'>
+              </div>
+              <div class="form-group">
+                <div ng-show="emailForm.subject.$invalid && emailForm.subject.$dirty"
+                class="alert alert-danger">Please Enter A Subject</div>
+              </div>
+              <div class="form-group">
+                <label for='message'>Message</label>
+                <textarea class='form-control' name='message' required id='message' 
+                style='width:400px;height:175px' placeholder="Enter a Message" ng-model='message' >
+                </textarea>
+              </div>
+              <div class="form-group">
+                <div ng-show="emailForm.message.$invalid && emailForm.message.$dirty"
+                class="alert alert-danger">Please Enter A Message</div>
+              </div>
+                <div class="form-group">
+                  <input id='btnSend' type='button' value='Send List Email' ng-click='send()' 
+                  ng-disabled='emailForm.$pristine || emailForm.$invalid' class='btn btn-success' 
+                  style='display:inline-block;'>
+                </div>
+                <div>&nbsp;</div>
+                <div class="alert alert-danger" ng-show="duplicate">Item {{item}} is a Duplicate </div>
+              </form>
+            </div>
+          </div>
+          <div id="alertModal" class="modal hide fade" tabindex="-1" role="dialog" 
+          aria-labelledby="alertlModalLabel" aria-hidden="true">
+          <div class="modal-header">
+            <h3>{{ alertMessage }}
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </h3>
+          </div>
+        </div> 
+      </div>
+       </div>

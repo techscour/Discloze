@@ -1,0 +1,14 @@
+	<div class="well css-form" >
+			<form role="form" name='sendResetForm' method='POST' action='<%= session_ask_url %>'>
+				<h1>Request Password Reset</h1>
+				<div class="form-group">
+					<label for="email">Email address</label>
+					<input type="email" class="form-control" name="email" required email
+					placeholder="Enter Your Email Address" ng-model='email'>
+					<div class="alert alert-danger" ng-show="sendResetForm.email.$invalid && sendResetForm.email.$dirty"
+					>Please Enter A Valid Email Address </div>
+				</div>
+				<input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+				<button type="submit" ng-disabled="!sendResetForm.$valid" class="btn btn-success">Request</button>
+			</form>
+		</div>

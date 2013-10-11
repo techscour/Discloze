@@ -1,0 +1,36 @@
+
+
+
+
+<div class="well css-form" >
+	<form role="form" name='changePasswordForm' method='POST' action='<%= session_alter_url %>'>
+		<h1>Change Your Password</h1>
+		<div class="form-group">
+			<label for="old">Current Password</label>
+			<input type="password" class="form-control" name="old" required password id='old'
+			ng-minlength='3' ng-maxlength='20'
+			placeholder="Current Password" ng-model="old">
+			<div class="alert alert-danger" ng-show="changePasswordForm.old.$invalid && changePasswordForm.old.$dirty"
+			>Please Enter A Valid Password</div>
+		</div>
+		<div class="form-group">
+			<label for="new1">New Password</label>
+			<input type="password" class="form-control" name="new1" required password id='new1'
+			ng-minlength='3' ng-maxlength='20'
+			placeholder="New Password" ng-model="new1">
+		</div>
+		<div class="alert alert-danger" ng-show="changePasswordForm.new1.$invalid && changePasswordForm.new1.$dirty"
+		>Please Enter A Valid Password</div>
+		<div class="form-group">
+			<label for="new2">Confirm New Password</label>
+			<input type="password" class="form-control" name="new2" required password id='new2'
+			ng-minlength='3' ng-maxlength='20'
+			placeholder="Confirm New Password" ng-model="new2">
+		</div>
+		<div class="alert alert-danger" ng-show="changePasswordForm.new2.$invalid && changePasswordForm.new2.$dirty"
+		>Please Enter A Valid Password</div>
+		<div class="alert alert-danger" ng-show="changePasswordForm.new1.$valid && changePasswordForm.new2.$valid && new1!=new2">Passwords Must Match</div>
+		<input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+		<button type="submit" ng-disabled="changePasswordForm.$pristine || changePasswordForm.$invalid || new1!=new2" class="btn btn-success">Change Password</button>
+	</form>
+</div>

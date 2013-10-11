@@ -1,0 +1,203 @@
+<style type="text/css">
+.gridStyle {
+  border: 1px solid rgb(212,212,212);
+  width: 800px; 
+  height: 500px;
+}
+</style>
+<%= javascript_tag do %>
+var data = '<%= j data %>';
+var columns = '<%= j columns %>';
+var callbacks = '<%= j callbacks %>';
+<% end %>
+<div id="hiding" style='display:none'></div>
+<script type="text/javascript">
+
+//theModule.controller('MyCtrl', function($scope, $http) {
+  
+  var MyCtrl =function($scope, $http) {
+
+      $scope.maxSize = parseInt('<%= size %>');
+      $scope.sortInfo = [{ fields:[('<%= field %>')], directions: [('<%= field %>')]}];
+      $scope.totalItems = parseInt('<%= total %>');
+      $scope.currentPage = parseInt('<%= page %>');
+      $scope.userId = parseInt('<%= user_id %>');
+      $scope.mySelections = [];
+      $scope.id = -1;
+      $scope.authenticity_token = '<%= form_authenticity_token %>';
+      $scope.alertMessage ='';
+
+
+      columns = '{"tuples": ' + $('#hiding').html(columns).text() + '}';
+      columns = JSON.parse(columns).tuples;
+
+      callbacks = '{"tuples": ' + $('#hiding').html(callbacks).text() + '}';
+      $scope.callbacks = JSON.parse(callbacks).tuples;
+      console.log(JSON.stringify(callbacks));
+
+      $scope.deleting = !!$scope.callbacks['delete'];
+      $scope.creating = !!$scope.callbacks['create'];
+      $scope.editing = !!$scope.callbacks['edit'];
+
+      $scope.gridOptions = {
+        data: 'theData',
+        enablePaging: true,
+        sortinfo: $scope.sortInfo,
+        showFooter: false,
+        useExternalSorting: true,
+        columnDefs: columns,
+        selectedItems: $scope.mySelections,
+        multiSelect: false,
+        filterOptions: $scope.filterOptions
+      };
+
+      data = '{"tuples": ' + $('#hiding').html(data).text() + '}';
+      data = JSON.parse(data).tuples;
+      $scope.theData = data;
+      if (!$scope.$$phase) {
+        $scope.$apply();
+      }
+
+      //$scope.viewable = function()
+      //{
+        //if ($scope.theData.length == 0) return false;
+        //var first = $Scope.theData[0];
+        //return first.headline .list ||
+         //first.app_name || first.site_name;
+      //};
+
+      $scope.edit = function()
+      {
+        var id = $scope.mySelections[0].id;
+        window.location = '/publics/' + $scope.userId + '/edits/' + id + '/edit';
+      };
+
+      $scope.delete = function()
+      {
+        var controller = $scope.callbacks['delete'].controller;
+        var id = $scope.mySelections[0].id;
+        url = '/publics/' + $scope.userId + '/' + controller + '/' + id;
+        $scope.deleteUrl(url);
+      };
+      $scope.create = function()
+      {
+        var controller = $scope.callbacks['create'].controller;
+        var id = $scope.mySelections[0].id;
+        url = '/publics/' + $scope.userId + '/' + controller
+        $scope.createUrl(url,id); 
+      };
+      $scope.view = function()
+      {
+        var html = null;
+        angular.forEach($scope.theData, function(x) {
+          if (x.id == $scope.mySelections[0].id) html = x.html;
+          });
+        $('#htmlContent').html(html);
+        $('#emailModal').modal('show');
+      };
+      $scope.getNextPage = function()
+      {
+        var size = $scope.maxSize;
+        var page = $scope.currentPage;
+        var field = $scope.gridOptions.ngGrid.config.sortInfo.fields[0];
+        var direction = $scope.gridOptions.ngGrid.config.sortInfo.directions[0];
+        var base = window.location.toString().split('?',1);
+        var url = base + '?size=' + size + '&page=' + page + '&field=' + field + '&direction=' + direction;
+        window.location =  base + '?size=' + size + '&page=' + page + '&field=' + field + '&direction=' + direction;
+      };
+      $scope.deleteUrl = function (url) {
+          setTimeout(function () {
+                $http.delete(url).success(function () {
+                      $scope.alertMessage = 'Deleted';
+                      $('#alertModal').modal('show'); 
+                  }).error(function(a,b,c) {
+                      $scope.alertMessage = 'Delete Failed';
+                      $('#alertModal').modal('show'); 
+                  })
+          }, 100);
+      };
+      $scope.createUrl = function (url,data) {
+          setTimeout(function () {
+                $http.post(url,data).success(function (a) {
+                      $scope.alertMessage = a;
+                      $('#alertModal').modal('show'); 
+                  }).error(function(a,b,c) {
+                    $scope.alertMessage = a;
+                    $('#alertModal').modal('show'); 
+                  })
+          }, 100);
+      };
+      $scope.$watch('maxSize', function (newVal, oldVal) {
+        if (newVal !== oldVal) $scope.getNextPage(); }, true);
+
+      $scope.$watch('currentPage', function (newVal, oldVal) {
+        if (newVal !== oldVal) $scope.getNextPage(); }, true);
+
+      $scope.$watch('gridOptions.ngGrid.config.sortInfo', function (newVal, oldVal) {
+        if (newVal !== oldVal) $scope.getNextPage(); }, true);
+      $scope.$watch('mySelections', function (newVal, oldVal) {
+        if (newVal !== oldVal) console.log('selection'); }, true);
+
+      $('#alertModal').on('hidden', function () {
+        $scope.getNextPage();
+      });
+      
+  }
+
+</script>
+
+
+<div class="well" ng-controller='MyCtrl' >
+  <div>
+    <h1 style='display:inline-block;'><%= header %>
+     <input id='btnView' type='button' value='View Selected' ng-click='view()' 
+      ng-show='!!theData[0].html' ng-disabled='!mySelections[0].id' class='btn btn-warning'
+      style='display:inline-block;'>
+     <input id='btnAdd' type='button' value='Add Selected' ng-click='add()' ng-show='adding' 
+      ng-disabled='!mySelections[0].id' class='btn btn-success' style='display:inline-block;'>
+     <input id='btnDelete' type='button' value='Delete Selected' ng-click='delete()' 
+      ng-show='deleting' ng-disabled='!mySelections[0].id' class='btn btn-danger' 
+      style='display:inline-block;'>
+     <input id='btnEdit' type='button' value='Edit Selected' ng-click='edit()' ng-show='editing' 
+       ng-disabled='!mySelections[0].id'class='btn btn-info' style='display:inline-block;'>
+     <input id='btnCreate' type='button' value='Create Selected' ng-click='create()' ng-show='creating' 
+       ng-disabled='!mySelections[0].id'class='btn btn-info' style='display:inline-block;'>
+    </h1>
+  </div>
+  <div class="gridStyle" ng-grid="gridOptions"></div>
+  <div class='form-inline'>
+    <div style='margin-top:8px'>
+      <pagination total-items="totalItems" page="currentPage" items-per-page="maxSize" 
+      class="pagination-small" boundary-links="true" rotate="false" 
+      style='display:inline-block;margin:0px;padding:0px;vertical-align:middle'>
+      ></pagination>
+         <select ng-model='maxSize' 
+         style='display:inline-block;margin:0px;padding:0px;height:28px;width:80px;font-size:12px;vertical-align:middle'>
+            <option>5</option>
+            <option selected>10</option>
+            <option>20</option>
+            <option>50</option>
+            <option>100</option>
+        </select>
+    </div>
+  </div>
+  <div id="emailModal" class="modal hide fade" tabindex="-1" role="dialog" 
+    aria-labelledby="emailModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <h3>About {{ mySelections[0].headline || mySelections[0].name || mySelections[0].list || mySelections[0].app_name || mySelections[0].site_name}}
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      </h3>
+    </div>
+    <div class="modal-body" id='htmlContent'>
+    </div>
+  </div>
+   <div id="alertModal" class="modal hide fade" tabindex="-1" role="dialog"
+      data-keyboard="false" data-backdrop="static"aria-labelledby="alertlModalLabel" 
+      aria-hidden="true">
+    <div class="modal-header">
+      <h3>{{ alertMessage }}
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      </h3>
+    </div>
+  </div> 
+</div>

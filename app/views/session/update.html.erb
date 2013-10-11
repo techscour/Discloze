@@ -1,0 +1,75 @@
+<script type="text/javascript">
+	var update_controller = function($scope) {
+		$scope.email = '<%= values['email'] %>';
+		$scope.first  = '<%= values['first'] %>';
+		$scope.last  = '<%= values['last'] %>';
+		$scope.zip = parseInt('<%= values['zip'] %>');
+		$scope.year  = parseInt('<%= values['year'] %>');
+		$scope.gender  = '<%= values['gender'] %>';
+		if ($scope.user != '')
+		{
+			$('#editUserForm').addClass('ng-dirty');
+		}
+	}
+</script>
+<div class="well css-form" ng-controller='update_controller' >
+	<form role="form" name='editUserForm' id='editUserForm' method='POST' 
+	 action='<%= session_amend_url %>' >
+		<h1>Update Your Information</h1>
+		<div class="form-group">
+			<label for="email">Your Email Address</label>
+			<input type="email" class="form-control" name="email" required email 
+			placeholder="Your Email" ng-model="email">
+			<div class="alert alert-danger" ng-show="editUserForm.email.$invalid && editUserForm.email.$dirty"
+			>Please Enter A Valid Email Address</div>
+		</div>
+		<div class="form-group">
+			<label for="first">Your Fist Name</label>
+			<input type="text" class="form-control" name="first" required text value='abc'
+			ng-minlength='3' ng-maxlength='20'
+			placeholder="Your First Name" ng-model="first">
+			<div class="alert alert-danger" ng-show="editUserForm.first.$invalid && editUserForm.first.$dirty"
+			>Please Enter A Valid First Name</div>
+		</div>
+		<div class="form-group">
+			<label for="last">Your Last Name</label>
+			<input type="text" class="form-control" name="last" required text
+			ng-minlength='3' ng-maxlength='20'
+			placeholder="Your Last Name" ng-model="last">
+			<div class="alert alert-danger" ng-show="editUserForm.last.$invalid && editUserForm.last.$dirty"
+			>Please Enter A Valid Last Name</div>
+		</div>
+		<div class="form-group">
+			<label for="zip">Your Zip Code (optional)</label>
+			<input type="number" class="form-control" name="zip"  number
+			ng-minlength='5' ng-maxlength='5'
+			placeholder="Your Zip Code" ng-model="zip">
+		</div>
+		<div class="alert alert-danger" ng-show="editUserForm.zip.$invalid && editUserForm.zip.$dirty"
+		>Please Correct Your Zip Code</div>
+		<div class="form-group">
+			<label for="year">Your Birth Year (optional)</label>
+			<input type="number" class="form-control" name="year"  number
+			ng-minlength='4' ng-maxlength='4'
+			placeholder="Your Birth Year" ng-model="year">
+		</div>
+		<div class="alert alert-danger" ng-show="editUserForm.year.$invalid && editUserForm.year.$dirty"
+		>Please Correct Your Birth Year</div>
+		<div class="form-group">
+			<label for="gender">Your Gender (optional)<br/>
+			<input type="radio" selected='true' name="gender" ng-model="gender" value="empty" />not specified&nbsp;
+			<input type="radio" name="gender"  ng-model="gender" value="male" />male&nbsp;
+			<input type="radio" name="gender"  ng-model="gender" value="female" />female</label><br/>
+		</div>
+		<input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+		<button type="submit" ng-disabled="!editUserForm.$valid" class="btn btn-success">Update Your Information</button>
+	</form>
+</div>
+<div>&nbsp;</div>
+<div class="well" >
+	<form role="form" name='deleteAccountForm'  method='POST' action='<%= session_abolish_url %>'>
+		<h1>Delete Your Account Permanently</h1>
+		<input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+		<button type="submit" class="btn btn-danger btn-default">Delete My Account</button>
+	</form>
+</div>

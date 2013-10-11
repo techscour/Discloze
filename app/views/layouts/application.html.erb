@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Discloze</title>
+
+  <script src="//code.jquery.com/jquery.js"></script>
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+  <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+  
+  <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
+  <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
+
+  <script type="text/javascript" src="http://angular-ui.github.com/ng-grid/lib/ng-grid.debug.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://angular-ui.github.com/ng-grid/css/ng-grid.css" />
+
+<script type="text/javascript">
+
+var theModule = angular.module('theModule', ['ngGrid','ui.bootstrap']).config([
+    "$httpProvider", function($httpProvider) {
+    csrfToken = $('meta[name=csrf-token]').attr('content');
+    $httpProvider.defaults.headers.common['X-CSRF-Token'] = csrfToken;
+   }
+  ]);
+</script>
+<style type="text/css">
+
+.css-form input.ng-invalid.ng-dirty {
+  background-color: #FA787E;
+}
+
+.css-form input.ng-valid.ng-dirty {
+  background-color: #78FA89;
+}
+</style>
+
+
+</head>
+<body ng-app='theModule'>
+
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="brand" href="/">Discloze</a>
+        <div class="nav-collapse collapse">
+          <ul class="nav">
+            <li class="active"><a href="/">Home</a></li>
+            <% if @user -%>
+            <li class="dropdown">
+              <a href="/" class="dropdown-toggle" data-toggle="dropdown">Your Services <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="<%= public_lists_url(:public_id => @user) %>">My Lists</a></li>
+                <li><a href="<%= public_invitations_url(:public_id => @user) %>">My Invitations</a></li>
+                <li><a href="<%= public_updates_url(:public_id => @user) %>">My Updates</a></li>
+                <li><a href="<%= public_notices_url(:public_id => @user) %>">My Notices</a></li>
+                <li><a href="<%= public_offers_url(:public_id => @user) %>">My Offers</a></li>
+                <li class="divider"></li>
+                <li><a href="<%= public_app_of_publics_url(:public_id => @user) %>">My Apps</a></li>
+                <li><a href="<%= public_site_of_publics_url(:public_id => @user) %>">My Sites</a></li>
+                <li class="divider"></li>
+                <li><a href="<%= listables_url %>">List Catalog</a></li>
+                <li><a href="<%= partner_apps_url %>">App Catalog</a></li>
+                <li><a href="<%= partner_sites_url %>">Site Catalog</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Your Account <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+               <li><a href="<%= session_update_url %>">Update You Account Settings</a></li>
+               <li><a href="<%= session_passup_url %>">Change Your Password</a></li>
+             </ul>
+           </li>
+           <% end -%>
+           <li><a href="<%= session_about_url %>">About</a></li>
+         </ul>
+        <form class="navbar-form pull-right">
+          <% if @user -%>
+          <div class="form-group form-inline">
+              <span class='text-success'><%=  @user %></span>&nbsp;
+              <%= link_to "Sign Out", session_abandon_url, :class=>"btn btn-success form-control"%>
+            </div>
+          <% else -%>
+          <div class="form-group form-inline">
+              <%= link_to "Sign In", session_signin_url ,:class=>"btn btn-success form-control"%>
+              <%= link_to "Sign Up", session_signup_url, :class=>"btn btn-success form-control"%>
+          </div>
+          <% end -%>
+        </form>
+
+
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+var app = angular.module('theApp', ['ngGrid','ui.bootstrap']);
+</script>
+<%= csrf_meta_tags %>
+<style type="text/css">
+.notice {
+  color:green;
+}
+.alert {
+ color: red;
+}
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+</style>
+
+</head>
+<body ng-app='theApp'>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="container starter-tempate">
+    <% flash.each do |name, msg| -%>
+    <%= content_tag :div, msg, class: name %>
+    <% end -%>
+  </div>
+  <div class="container">
+    <%= yield %>
+  </div>
+</body>
+</html>

@@ -1,0 +1,2 @@
+module Mobil::HandheldHelper
+end
