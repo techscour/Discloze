@@ -16,9 +16,9 @@ SimpleAuth::Application.routes.draw do
     resources :partner_sites, only: [:create]
   end
 
-  #resources :listables, only: [:index]
-  #resources :partner_apps, only: [:index]
-  #resources :partner_sites, only: [:index]
+  resources :listables, only: [:index]
+  resources :partner_apps, only: [:index]
+  resources :partner_sites, only: [:index]
 
   #resources :partners, only: [:index, :get, :create, :update, :destroy] do
     #resources :partner_apps, only: [:index, :get, :create, :update, :destroy]
@@ -42,9 +42,7 @@ SimpleAuth::Application.routes.draw do
     post "abolish"
     get "about"
   end
-  resource :listables
-  resource :partner_apps
-  resource :partner_sites
+
 
   namespace :mobiles do
     get "landing" 

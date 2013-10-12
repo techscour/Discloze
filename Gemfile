@@ -40,12 +40,10 @@ group :test, :development do
 	gem 'poltergeist'
 	gem 'spork'
 	gem 'awesome_print'
-	#gem 'lorem'
 	gem 'rspec-rails' 
 	gem 'factory_girl_rails'
 	gem 'guard-rspec' 
 	gem 'launchy' 
-	gem 'faker'
 	gem 'better_errors'
 	gem 'pry-rescue'
   	gem 'pry-stack_explorer'
@@ -65,13 +63,13 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
-gem 'rb-readline'
 gem 'stormpath-sdk', '~> 1.0.0.beta.2'
 gem 'stormpath-omniauth', '~> 1.0.0.beta.3'
 gem 'kaminari'
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 gem 'pry'
 gem 'rails_12factor', group: :production
+gem 'faker'
 group :production do
 	gem 'pg'
 	gem 'thin'
