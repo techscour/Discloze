@@ -24,7 +24,9 @@ var theModule = angular.module('theModule', ['ngGrid','ui.bootstrap']).config([
   ]);
 </script>
 <style type="text/css">
-
+body {
+  padding-top: 50px;
+}
 .css-form input.ng-invalid.ng-dirty {
   background-color: #FA787E;
 }
@@ -97,58 +99,6 @@ var theModule = angular.module('theModule', ['ngGrid','ui.bootstrap']).config([
     </div>
   </div>
 </div>
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script type="text/javascript">
-var app = angular.module('theApp', ['ngGrid','ui.bootstrap']);
-</script>
-<%= csrf_meta_tags %>
-<style type="text/css">
-.notice {
-  color:green;
-}
-.alert {
- color: red;
-}
-body {
-  padding-top: 50px;
-}
-.starter-template {
-  padding: 40px 15px;
-  text-align: center;
-}
-</style>
-
-</head>
-<body ng-app='theApp'>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   <div class="container starter-tempate">
     <% flash.each do |name, msg| -%>
     <%= content_tag :div, msg, class: name %>
@@ -159,3 +109,6 @@ body {
   </div>
 </body>
 </html>
+
+
+

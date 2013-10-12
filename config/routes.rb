@@ -43,6 +43,8 @@ SimpleAuth::Application.routes.draw do
     get "about"
   end
 
+  get '/auth/:provider/callback', :to => 'session#create'
+  get '/auth/failure', :to => 'session#failure'
 
   namespace :mobiles do
     get "landing" 

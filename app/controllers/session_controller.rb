@@ -1,11 +1,25 @@
 class SessionController < ApplicationController
 
   skip_before_action :require_login, only: [:landing, :signin, :signup,\
-   :authorize, :preset, :ask, :abandon, :add, :about]
+   :authorize, :preset, :ask, :abandon, :add, :about, :create, :destroy, :failure]
   include SessionHelper 
 
   def landing
     extend Rails.application.routes.url_helpers
+  end
+
+  def create
+    auth_hash = request.env['omniauth.auth']
+    render :json => auth_hash
+  end
+  
+  def destroy
+    session[:user_id] = nil
+    render :text => "You've logged out"
+  end
+  
+  def failure
+    render :text => "Sorry, but you didn't allow access to our app!"
   end
 
   def about

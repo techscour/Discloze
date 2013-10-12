@@ -70,6 +70,7 @@ gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 gem 'pry'
 gem 'rails_12factor', group: :production
 gem 'faker'
+gem 'omniauth-facebook'
 group :production do
 	gem 'pg'
 	gem 'thin'
