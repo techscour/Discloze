@@ -72,6 +72,7 @@ gem 'rails_12factor', group: :production
 gem 'faker'
 gem 'omniauth-facebook'
 gem 'mail'
+gem 'newrelic_rpm', ">=3.6.8.164"
 group :production do
 	gem 'pg'
 	gem 'thin'
