@@ -71,6 +71,7 @@ gem 'pry'
 gem 'rails_12factor', group: :production
 gem 'faker'
 gem 'omniauth-facebook'
+gem 'mail'
 group :production do
 	gem 'pg'
 	gem 'thin'

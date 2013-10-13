@@ -47,10 +47,8 @@ var data = '<%= j data %>';
     $scope.sortInfo = [{ fields:[('item')], directions: [('asc')]}];
 
     data = '{"tuples": ' + $('#hiding').html(data).text() + '}';
-    console.log(data); 
     data = JSON.parse(data).tuples;
     if (data == '""') data = [];
-    console.log(JSON.stringify(data));
     $scope.theData = data;
     if (!$scope.$$phase) {
       $scope.$apply();
@@ -61,10 +59,6 @@ var data = '<%= j data %>';
       columnDefs: $scope.columns,
       selectedItems: $scope.mySelections,
       multiSelect: false
-    };
-    $scope.download = function()
-    {
-      alert('download');
     };
 
     $scope.rating_change = function()
@@ -104,27 +98,44 @@ var data = '<%= j data %>';
         window.onbeforeunload = null;
       };
 
+      $scope.cancel = function()
+      {
+        $('#emailModal').modal('hide');
+         window.onbeforeunload = null;
+      };
+
       $scope.send = function()
       {
-        var saved = {mail_to: $scope.mail_to, subject: $scope.subject, body: $scope.body,
+        var mail = {mail_to: $scope.mail_to, subject: $scope.subject, body: $scope.message,
           list: $scope.name, visibility: $scope.visibility, data: $scope.data};
-          var url = '/publics/' + $scope.user_id + '/emails';
-          $scope.postUrl(url,saved);
-          $scope.edits = 0;
+          var url = '/session/mail';
+          $('#emailModal').modal('hide');
           window.onbeforeunload = null;
+          $scope.postUrl(url,mail); 
         };
 
         $scope.email = function()
         {
+          //var mail = { name: $scope.name, visibility: $scope.visibility, 
+            //values: $scope.theData, mail_to: $scope.mail_to, subject: $scope.subject,
+            //body: $scope.message };
           $scope.clearEmailForm();
-          $scope.mail_to = '';
           $scope.subject = 'My ' + $scope.name + ' List';
-          $scope.body = '';
           $('#emailModal').modal('show');
         };
 
+        $scope.download = function()
+        {
+          //var download = {list: $scope.name, visibility: $scope.visibility, data: $scope.data};
+          var url = '/session/download?name='+ $scope.name;
+          window.location = url;
+          //$scope.postUrl(url,download);
+        };
         $scope.clearEmailForm = function()
         {
+          $scope.mail_to = '';
+          $scope.subject = '';
+          $scope.message = '';
           $scope.clearForm($scope.emailForm,'#emailForm');
           $scope.clearField($scope.emailForm.mail_to,'#mail_to');
           $scope.clearField($scope.emailForm.subject,'#subject');
@@ -244,11 +255,11 @@ var data = '<%= j data %>';
           //alert([url,data]);
           setTimeout(function () {
             $http.post(url,data).success(function () {
-              $scope.alertMessage = 'Mail Sent';
+              $scope.alertMessage = 'Success';
               $('#alertModal').modal('show'); 
               window.onbeforeunload = null;
             }).error(function(a,b,c) {
-              $scope.alertMessage = 'Send Mail Failed';
+              $scope.alertMessage = 'Failed';
               $('#alertModal').modal('show'); 
             })
           }, 100);
@@ -269,7 +280,7 @@ var data = '<%= j data %>';
               <select ng-model='visibility' style='width:100;vertical-align:middle' 
               ng-options="o for o in ['Offers','Public','Protected','Private']">
             </select>
-            <input id='btnDownload' type='button' value='Save' ng-click='save()' 
+            <input id='btnSave' type='button' value='Save' ng-click='save()' 
             class='btn btn-success' style='display:inline-block;'>
             <input id='btnDownload' type='button' value='Download' ng-click='download()' 
             class='btn btn-success' style='display:inline-block;'>
@@ -368,6 +379,8 @@ var data = '<%= j data %>';
                   <input id='btnSend' type='button' value='Send List Email' ng-click='send()' 
                   ng-disabled='emailForm.$pristine || emailForm.$invalid' class='btn btn-success' 
                   style='display:inline-block;'>
+                  <input id='btnCancel' type='button' value='Cancel' ng-click='cancel()' 
+                  class='btn btn-danger' style='display:inline-block;'>
                 </div>
                 <div>&nbsp;</div>
                 <div class="alert alert-danger" ng-show="duplicate">Item {{item}} is a Duplicate </div>

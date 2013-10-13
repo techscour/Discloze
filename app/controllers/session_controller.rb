@@ -1,8 +1,42 @@
+require 'csv'
 class SessionController < ApplicationController
 
   skip_before_action :require_login, only: [:landing, :signin, :signup,\
    :authorize, :preset, :ask, :abandon, :add, :about, :create, :destroy, :failure]
   include SessionHelper 
+
+  def download
+    list = List.where(:name => params['name'], :public_id => session[:user_id]).first
+    rows = JSON.parse(list.values).collect{|x| [ list.name, x['item'], "#{x['rating']}" ]}
+    rows.unshift %w[list item rating] 
+    rows = rows.collect{|row| row.to_csv}.join 
+    response.headers['Content-Disposition'] = "attachment; filename=\"#{list.name}.csv\""
+    render  :text => rows, :content_type =>  Mime::CSV, :staus => :ok
+  end
+
+  def mail
+    Mail.defaults do
+      delivery_method :smtp, { :address   => "smtp.sendgrid.net",
+                               :port      => 587,
+                               :domain    => "techscour.com",
+                               :user_name => ENV['MGNAME'],
+                               :password  => ENV['MGPASS'],
+                               :authentication => 'plain',
+                               :enable_starttls_auto => true }
+    end
+    list = List.where(:name => params['list'], :public_id => session[:user_id]).first
+    mail = Mail.new
+    message = params['body'] + "\n\n" + format_list(list)
+    mail.to params['mail_to']
+    mail.from session[:user_email] 
+    mail.subject params['subject']
+    mail.text_part do
+        body message
+    end
+    mail.deliver
+    render :json => 'true' 
+  end
+
 
   def landing
     extend Rails.application.routes.url_helpers
@@ -92,6 +126,7 @@ class SessionController < ApplicationController
       publik = Public.find_or_create_by(stormpath_id: session[:user])
       publik.last_login = Time.now.utc
       session[:user_id] = publik.id
+      session[:user_email] = params['email']
       flash.clear
       redirect_to  root_url
     else

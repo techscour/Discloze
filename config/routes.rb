@@ -11,7 +11,7 @@ SimpleAuth::Application.routes.draw do
     resources :app_of_publics, only: [:index, :destroy]
     resources :notices, only: [:index, :destroy]
     resources :edits, only: [:edit]
-    resources :emails, only: [:create]
+    #resources :emails, only: [:create]
     resources :partner_apps, only: [:create]
     resources :partner_sites, only: [:create]
   end
@@ -41,35 +41,37 @@ SimpleAuth::Application.routes.draw do
     post "ask"
     post "abolish"
     get "about"
+    get "download"
+    post "mail"
   end
 
-  get '/auth/:provider/callback', :to => 'session#create'
-  get '/auth/failure', :to => 'session#failure'
+  get "/auth/:provider/callback", :to => "session#create"
+  get "/auth/failure", :to => "session#failure"
 
   namespace :mobiles do
     get "landing" 
     post "login"
     get "logout"
     get "lists"
-    get "list/:list_id", :to => MobilesController.action(:list) #'list'
+    get "list/:list_id", :to => MobilesController.action(:list) #"list"
   end
 
   namespace :apis do
-    get "app_publics/:partner_app_id", :to=>'api#app_publics'
-    get "site_publics/:partner_site_id", :to=>'api#site_publics'
-    post "invite/:public_id", :to=>'api#invite'
-    post "offer/:public_id", :to=>'api#offer'
-    post "update/:public_id", :to=>'api#update'
-    get "lists/:listable_id" , :to=>'api#lists'
-    get "list/:list_id", :to=>'api#list'
-    get "publics/:public_id/list/:list_id", :to=>'api#publics_list'
-    get "publics/:public_id", :to=>'api#publics'
-    get "publics_lists/:public_id/", :to=>'api#publics_lists'
-    get "authorize/:key", :to=>'api#authorize'
-    get "adieu", :to=>'api#adieu'
+    get "app_publics/:partner_app_id", :to=>"api#app_publics"
+    get "site_publics/:partner_site_id", :to=>"api#site_publics"
+    post "invite/:public_id", :to=>"api#invite"
+    post "offer/:public_id", :to=>"api#offer"
+    post "update/:public_id", :to=>"api#update"
+    get "lists/:listable_id" , :to=>"api#lists"
+    get "list/:list_id", :to=>"api#list"
+    get "publics/:public_id/list/:list_id", :to=>"api#publics_list"
+    get "publics/:public_id", :to=>"api#publics"
+    get "publics_lists/:public_id/", :to=>"api#publics_lists"
+    get "authorize/:key", :to=>"api#authorize"
+    get "adieu", :to=>"api#adieu"
   end
 
-  root 'session#landing'
+  root "session#landing"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

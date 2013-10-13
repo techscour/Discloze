@@ -89,5 +89,15 @@ module SessionHelper
 
 	def stormpath_handle_new_account_confirm token
 	end
-
+	def format_list list
+	    rows = JSON.parse(list.values).collect{|x| [ list.name, x['item'], "#{x['rating']}" ]}
+	    rows.unshift %w[list item rating] 
+	    rows = rows.collect do |row|  
+	      row.each do |col|
+	        '"' + col.gsub('"','""') + '"'
+	      end
+	      row * "\t"
+	    end
+	    rows = rows * "\r\n"
+    end 
 end

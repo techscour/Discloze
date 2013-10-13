@@ -309,6 +309,7 @@ DEPENDENCIES
   jquery-rails
   kaminari
   launchy
+  mail
   omniauth-facebook
   pg
   poltergeist
