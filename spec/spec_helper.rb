@@ -6,7 +6,8 @@ require 'rspec/autorun'
 require 'factory_girl'
 require Rails.root.to_s + '/app/helpers/session_helper.rb'
 include SessionHelper
-
+require 'simplecov'
+SimpleCov.start
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }

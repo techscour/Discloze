@@ -44,6 +44,7 @@ group :test, :development do
 	gem 'factory_girl_rails'
 	gem 'guard-rspec' 
 	gem 'launchy' 
+	gem 'rails_best_practices'
 	gem 'better_errors'
 	gem 'pry-rescue'
   	gem 'pry-stack_explorer'
