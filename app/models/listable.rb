@@ -1,3 +1,3 @@
 class Listable < ActiveRecord::Base
-	scope :browsable, -> { select('name, topic, id') }
+	validates :name, :topic, :description, :html, presence: true
 end

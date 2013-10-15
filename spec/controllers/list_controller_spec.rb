@@ -18,26 +18,29 @@ describe ListsController do
   describe "POST create" do
     describe "with valid params" do
       it "creates a new List" do
-      	listable = Listable.create!
-        parameters = {:public_id => 1, '_json' => listable.id } 
+        listable = create :listable, name: 'Alpha'
+        publik = create :public
+        parameters = {:public_id => publik.id, '_json' => listable.id } 
         expect {
           post :create, parameters, valid_session
         }.to change(List, :count).by(1)
       end
 
       it "returns created message on success" do
-      	listable = Listable.create name: 'Alpha'
-        parameters = {:public_id => 1, '_json' => listable.id } 
+        listable = create :listable, name: 'Alpha'
+        publik = create :public
+        parameters = {:public_id => publik.id, '_json' => listable.id } 
         post :create, parameters, valid_session
-        response.body == "Alpha Created"
+        expect(response.body).to eq("Alpha Created")
       end
 
       it "returns duplicate message on duplication" do
-      	listable = Listable.create name: 'Alpha'
-        parameters = {:public_id => 1, '_json' => listable.id } 
+        listable = create :listable, name: 'Alpha'
+        publik = create :public
+        parameters = {:public_id => publik.id, '_json' => listable.id } 
         post :create, parameters, valid_session
         post :create, parameters, valid_session
-        response.body == "Duplilcate"
+        expect(response.body).to eq("Duplicate List")
       end
     end
   end
@@ -46,8 +49,8 @@ describe ListsController do
     describe "with valid params" do
       it "updates the requested list" do
         attributes = { "name" => "name", "values" => "[{}]", "visibility" => "Public" }
-        list = List.create! attributes
-        updated = {:public_id => 1, :id => list.id, :values => '[{"a":"b"}]', :visibility => "Private" }
+        list = create :list 
+        updated = {:public_id => 1, :id => list.id, :values => list.values, :visibility => list.visibility }
         list.visibility == 'Private' && list.values == '[{"a":"b"}]'
       end
     end
@@ -55,7 +58,7 @@ describe ListsController do
 
   describe "DELETE destroy" do
     it "destroys the requested list" do
-      list = List.create! valid_attributes
+      list = create :list 
       parameters = {:id => list.id, :public_id => list.public_id} 
       expect {
         delete :destroy, parameters, valid_session, nil

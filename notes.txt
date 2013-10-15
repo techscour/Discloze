@@ -1,1 +1,56 @@
-watch out for jquery mobile listview refresh
+
+app_of_publics
+validates :public_id, :partner_app_id, :created_at, :updated_at, presence: true
+
+invitations
+validates :public_id, :partner_id, :headline, :list, :html, :posted, :effective, :expires, :created_at, :updated_at, presence: true
+
+listables
+validates :name, :topic, :description, :html, :created_at, :updated_at, presence: true
+
+
+lists
+validates :public_id, :name, :visibility, :values, :last_activity, :created, :created_at, :updated_at, presence: true
+
+logins
+validates :public_id, :last_activity, :remember, :created_at, :updated_at, presence: true
+
+notices
+validates :public_id :headline, :html, :posted, :created_at, :updated_at, presence: true
+
+
+offers
+validates :public_id, :partner_id, :list, :headline, :html, :posted, :effective, :expires, :created_at, :updated_at, presence: true
+
+
+partner_apps
+validates :partner_id, :name, :description, :url, :html, :created_at, :updated_at, presence: true
+
+
+partner_sites
+validates :partner_id, :name, :description, :url, :html, :created_at, :updated_at, presence: true
+
+
+partners
+validates :stormpath_id, :name, :description, :url, :html, :created_at, :updated_at, presence: true
+
+
+publics
+
+
+
+sessions
+validates :session_id, :data, :created_at, :updated_at, presence: true
+
+
+site_of_publics
+validates :public_id, :partner_site_id, :created_at, :updated_at, presence: true
+
+
+tokens
+validates :partner_id, :token_value, :last_login, :last_activity, :created_at, :updated_at, presence: true
+
+
+updates
+validates :public_id, :partner_id, :list, :headline, :html, :posted, :effective, :expires, :created_at, :updated_at, presence: true
+

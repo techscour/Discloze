@@ -1,5 +1,5 @@
 class Invitation < ActiveRecord::Base
   belongs_to :public
   belongs_to :partner
-  scope :browsable, -> { select('headline, list, html, posted, id, partner.name') }
+  validates :public_id, :partner_id, :headline, :list, :html, :posted, :effective, :expires, presence: true
 end

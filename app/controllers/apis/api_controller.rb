@@ -4,7 +4,7 @@ class Apis::ApiController < ActionController::Base
 
 	#get "app_publics/:partner_app_id", :to=>'api#app_publics'
 	def app_publics
-		app = PartnerApp.find(params['partner_app_id']) 
+		app = PartnerApp.find_by_id(params['partner_app_id']) 
 		unless app && app.partner_id == @partner_id 
 			render :json => 'not found' , :status => :not_found
 			return
@@ -15,7 +15,7 @@ class Apis::ApiController < ActionController::Base
 	#get "site_publics/:site_id", :to=>'api#site_publics'
 	def site_publics
 
-		site = PartnerSite.find(params['partner_site_id']) 
+		site = PartnerSite.find_by_id(params['partner_site_id']) 
 		unless site && site.partner_id == @partner_id 
 			render :json => 'not found' , :status => :not_found
 			return
@@ -25,43 +25,43 @@ class Apis::ApiController < ActionController::Base
 
 	#post "invite/:public_id", :to=>'api#invite'
 	def invite
-		publik = Public.find(params['public_id'])
+		publik = Public.find_by_id(params['public_id'])
 		unless publik
 			render :json => 'not found' , :status => :not_found
 			return
 		end
 		params['partner_id'] = @partner_id
-		Invitation.create! params.select {|k,v| %w{public_id partner_id headline list html posted effective}.include? k}
+		Invitation.create! params.select {|k,v| %w{public_id partner_id headline list html posted expires effective}.include? k}
 		render :json => "ok"
 	end
 
 	#post "offer/:public_id", :to=>'api#offer'
 	def offer
-		publik = Public.find(params['public_id'])
+		publik = Public.find_by_id(params['public_id'])
 		unless publik
 			render :json => 'not found' , :status => :not_found
 			return
 		end
 		params['partner_id'] = @partner_id
-		Offer.create! params.select {|k,v| %w{public_id partner_id headline list html posted effective}.include? k}
+		Offer.create! params.select {|k,v| %w{public_id partner_id headline list html posted expires effective}.include? k}
 		render :json => "ok"
 	end
 
 	#post "update/:public_id", :to=>'api#update'
 	def update
-		publik = Public.find(params['public_id'])
+		publik = Public.find_by_id(params['public_id'])
 		unless publik
 			render :json => 'not found' , :status => :not_found
 			return
 		end
 		params['partner_id'] = @partner_id
-		Update.create! params.select {|k,v| %w{public_id partner_id headline list html posted effective}.include? k}
+		Update.create! params.select {|k,v| %w{public_id partner_id headline list html posted expires effective}.include? k}
 		render :json => "ok"
 	end
 
 	#get "lists/:listable_id" , :to=>'api#lists'
 	def lists
-		listable = Listable.find(params['listable_id'])
+		listable = Listable.find_by_id(params['listable_id'])
 		unless listable
 			render :json => 'not found' , :status => :not_found
 			return
@@ -72,7 +72,7 @@ class Apis::ApiController < ActionController::Base
 
 	#get "list/:list_id", :to=>'api#list'
 	def list
-		list = List.find(params['list_id'])
+		list = List.find_by_id(params['list_id'])
 		if list	
 			render :json => list
 		else
@@ -82,7 +82,7 @@ class Apis::ApiController < ActionController::Base
 
 	#get "publics/:public_id", :to=>'api#publics'
 	def publics
-		publik = Public.find(params['public_id'])
+		publik = Public.find_by_id(params['public_id'])
 		if publik
 			render :json => publik 
 		else
@@ -92,8 +92,8 @@ class Apis::ApiController < ActionController::Base
 
 	#get "publics/:public_id/list/:list_id", :to=>'api#publics'
 	def publics_list
-		publik = Public.find(params['public_id'])
-		list = List.find(params['list_id'])
+		publik = Public.find_by_id(params['public_id'])
+		list = List.find_by_id(params['list_id'])
 		if publik && list && list.public_id == publik.id
 			render :json => list
 		else
@@ -103,7 +103,7 @@ class Apis::ApiController < ActionController::Base
 
 	#get "publics_lists/:public_id/lists_id", :to=>'api#publics'
 	def publics_lists
-		publik = Public.find(params['public_id'])
+		publik = Public.find_by_id(params['public_id'])
 		if publik
 			render :json => List.where(:public_id => params['public_id']).order('name asc').pluck('id','name').to_json
 		else
@@ -111,10 +111,10 @@ class Apis::ApiController < ActionController::Base
 		end
 	end	
 
-	#get "authorize/:key", :to=>'api#authorize'
+	#get "authorize", :to=>'api#authorize'
 	def authorize
 	  authenticate_or_request_with_http_basic do |username, password|
-	      if stormpath_authenticate_login  username, password
+	      if stormpath_authenticate_login(username, password) == true
 	      	@partner = Partner.find_or_create_by stormpath_id: username
 	      	key = generate_token
 	      	token = Token.create! :partner_id => @partner.id, :token_value => key, :last_login => Time.now.utc, :last_activity => Time.now.utc

@@ -67,7 +67,8 @@ SimpleAuth::Application.routes.draw do
     get "publics/:public_id/list/:list_id", :to=>"api#publics_list"
     get "publics/:public_id", :to=>"api#publics"
     get "publics_lists/:public_id/", :to=>"api#publics_lists"
-    get "authorize/:key", :to=>"api#authorize"
+    #get "authorize/:key", :to=>"api#authorize"
+    get "authorize", :to=>"api#authorize"
     get "adieu", :to=>"api#adieu"
   end
 

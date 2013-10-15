@@ -10,4 +10,5 @@ class Public < ActiveRecord::Base
   has_many :lists, :dependent => :delete_all
   has_many :invitations, :dependent => :delete_all
   has_many :logins, :dependent => :delete_all
+  validates :stormpath_id, :last_login, presence: true
 end

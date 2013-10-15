@@ -1,4 +1,4 @@
 class Notice < ActiveRecord::Base
   belongs_to :public
-  scope :browsable, -> { select('headline, html, posted, id') }
+  validates :public_id, :headline, :html, :posted, presence: true
 end

@@ -34,11 +34,16 @@ def index
   # POST /lists
   # POST /lists.json
   def create
-    listable = Listable.find(params['_json'])
+    listable = Listable.find_by_id(params['_json'])
+    if listable.nil?
+      render :text => 'Listable Not Found'
+      return
+    end
     duplicates = List.find_by_name(listable.name)
     if duplicates.nil?
-      List.create(public_id:  params['public_id'], name: listable.name,\
-       visibility: 'Public', values: '[{}]'  )
+      List.create!(public_id:  params['public_id'], name: listable.name,\
+       visibility: 'Public', values: '[{}]', created: Time.now.utc, \
+       last_activity: Time.now.utc  )
       render :text => "#{listable.name} Created"
     else
       render :text => 'Duplicate List'
