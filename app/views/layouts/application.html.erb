@@ -1,62 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Discloze</title>
+  <title>Welcome to Discloze</title>
   <%= csrf_meta_tags %>
-  <script src="//code.jquery.com/jquery.js"></script>
   <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
-  <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
-  
-  <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
-  <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
-
-  <script type="text/javascript" src="http://angular-ui.github.com/ng-grid/lib/ng-grid.debug.js"></script>
   <link rel="stylesheet" type="text/css" href="http://angular-ui.github.com/ng-grid/css/ng-grid.css" />
-
-<script type="text/javascript">
-
-var theModule = angular.module('theModule', ['ngGrid','ui.bootstrap']).config([
-    "$httpProvider", function($httpProvider) {
-    csrfToken = $('meta[name=csrf-token]').attr('content');
-    $httpProvider.defaults.headers.common['X-CSRF-Token'] = csrfToken;
-   }
-  ]);
-</script>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-44826961-1', 'discloze.herokuapp.com');
-  ga('send', 'pageview');
-
-</script>
-<style type="text/css">
-    body {
-      padding-top: 50px;
-    }
-    .css-form input.ng-invalid.ng-dirty {
-      background-color: #FA787E;
-    }
-
-    .css-form input.ng-valid.ng-dirty {
-      background-color: #78FA89;
-    }
-
-    .notice {
-      color:green;
-    }
-    .alert {
-     color: red;
-    }
-</style>
-
-
+  <style type="text/css">
+      body {
+        padding-top: 50px;
+      }
+      .css-form input.ng-invalid.ng-dirty {
+        background-color: #FA787E;
+      }
+      .css-form input.ng-valid.ng-dirty {
+        background-color: #78FA89;
+      }
+      .notice {
+        color:green;
+      }
+      .alert {
+       color: red;
+      }
+  </style>
 </head>
 <body ng-app='theModule'>
-
   <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
@@ -110,8 +77,6 @@ var theModule = angular.module('theModule', ['ngGrid','ui.bootstrap']).config([
           </div>
           <% end -%>
         </form>
-
-
       </div><!--/.nav-collapse -->
     </div>
   </div>
@@ -124,7 +89,30 @@ var theModule = angular.module('theModule', ['ngGrid','ui.bootstrap']).config([
   <div class="container">
     <%= yield %>
   </div>
+  <script src="//code.jquery.com/jquery.js"></script>
+  <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+  <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
+  <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
+  <script type="text/javascript" src="http://angular-ui.github.com/ng-grid/lib/ng-grid.debug.js"></script>
+  <script type="text/javascript">
+  var theModule = angular.module('theModule', ['ngGrid','ui.bootstrap']).config([
+      "$httpProvider", function($httpProvider) {
+      csrfToken = $('meta[name=csrf-token]').attr('content');
+      $httpProvider.defaults.headers.common['X-CSRF-Token'] = csrfToken;
+     }
+    ]);
+  </script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-44826961-1', 'discloze.herokuapp.com');
+    ga('send', 'pageview');
+  </script>
 </body>
+
 </html>
 
 

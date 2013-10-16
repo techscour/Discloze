@@ -7,10 +7,10 @@ gem 'rails', '4.0.0'
 
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0'
+#gem 'sass-rails', '~> 4.0.0'
 
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+#gem 'uglifier', '>= 1.3.0'
 
 # Use CoffeeScript for .js.coffee assets and views
 #gem 'coffee-rails', '~> 4.0.0'
@@ -19,13 +19,13 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails'
+#gem 'jquery-rails'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 #gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
+#gem 'jbuilder', '~> 1.2'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -69,12 +69,13 @@ gem 'stormpath-omniauth', '~> 1.0.0.beta.3'
 gem 'kaminari'
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 gem 'pry'
-gem 'rails_12factor', group: :production
+gem 'byebug'
 gem 'faker'
 gem 'omniauth-facebook'
 gem 'mail'
 gem 'newrelic_rpm', ">=3.6.8.164"
 group :production do
+	gem 'rails_12factor'
 	gem 'pg'
 	gem 'thin'
 end
