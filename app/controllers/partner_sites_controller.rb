@@ -39,56 +39,53 @@ def index
 
   # GET /partner_sites/1
   # GET /partner_sites/1.json
-  def show
-  end
+  #def show
+  #end
 
   # GET /partner_sites/new
-  def new
-    @partner_site = PartnerSite.new
-  end
+  #def new
+    #@partner_site = PartnerSite.new
+  #end
 
   # GET /partner_sites/1/edit
-  def edit
-  end
+  #def edit
+  #end
 
   # POST /partner_sites
   # POST /partner_sites.json
   def create
-    site_id = params['_json']
-    public_id = params['public_id']
-    site = PartnerSite.find(site_id)
-    duplicates = SiteOfPublic.where("public_id = #{public_id} and partner_site_id = #{site_id}")
-    if duplicates.count.zero?
-      SiteOfPublic.create(public_id: public_id, partner_site_id: site_id) 
-      render :text => "#{site.name} Created"
+    if SiteOfPublic.where(partner_site_id:  params['_json'], public_id: session['user_id']).exists?
+      render :text => 'Duplicate App'
     else
-      render :text => 'Duplicate Site'
+      SiteOfPublic.create partner_site_id:  params['_json'], public_id: session['user_id']
+      render :text => "App Created"
     end
   end
 
   # PATCH/PUT /partner_sites/1
   # PATCH/PUT /partner_sites/1.json
-  def update
-    respond_to do |format|
-      if @partner_site.update(partner_site_params)
-        format.html { redirect_to @partner_site, notice: 'Partner site was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @partner_site.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  #def update
+    #respond_to do |format|
+      #if @partner_site.update(partner_site_params)
+        #format.html { redirect_to @partner_site, notice: 'Partner site was successfully updated.' }
+        #format.json { head :no_content }
+      #else
+        #format.html { render action: 'edit' }
+        #format.json { render json: @partner_site.errors, status: :unprocessable_entity }
+      #end
+    #end
+  #end
 
   # DELETE /partner_sites/1
   # DELETE /partner_sites/1.json
-  def destroy
-    @partner_site.destroy
-    respond_to do |format|
-      format.html { redirect_to partner_sites_url }
-      format.json { head :no_content }
-    end
-  end
+  #def destroy
+  #  render :json => "ok"
+    #@partner_site.destroy
+    #respond_to do |format|
+      #format.html { redirect_to partner_sites_url }
+      #format.json { head :no_content }
+    #end
+  #end
 
   private
     # Use callbacks to share common setup or constraints between actions.

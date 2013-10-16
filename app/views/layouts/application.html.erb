@@ -66,14 +66,14 @@ body {
             <li class="dropdown">
               <a href="/" class="dropdown-toggle" data-toggle="dropdown">Your Services <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="<%= public_lists_url(:public_id => @user) %>">My Lists</a></li>
-                <li><a href="<%= public_invitations_url(:public_id => @user) %>">My Invitations</a></li>
-                <li><a href="<%= public_updates_url(:public_id => @user) %>">My Updates</a></li>
-                <li><a href="<%= public_notices_url(:public_id => @user) %>">My Notices</a></li>
-                <li><a href="<%= public_offers_url(:public_id => @user) %>">My Offers</a></li>
+                <li><a href="<%= lists_url(:public_id => @user) %>">My Lists</a></li>
+                <li><a href="<%= invitations_url(:public_id => @user) %>">My Invitations</a></li>
+                <li><a href="<%= updates_url(:public_id => @user) %>">My Updates</a></li>
+                <li><a href="<%= notices_url(:public_id => @user) %>">My Notices</a></li>
+                <li><a href="<%= offers_url(:public_id => @user) %>">My Offers</a></li>
                 <li class="divider"></li>
-                <li><a href="<%= public_app_of_publics_url(:public_id => @user) %>">My Apps</a></li>
-                <li><a href="<%= public_site_of_publics_url(:public_id => @user) %>">My Sites</a></li>
+                <li><a href="<%= app_of_publics_url(:public_id => @user) %>">My Apps</a></li>
+                <li><a href="<%= site_of_publics_url(:public_id => @user) %>">My Sites</a></li>
                 <li class="divider"></li>
                 <li><a href="<%= listables_url %>">List Catalog</a></li>
                 <li><a href="<%= partner_apps_url %>">App Catalog</a></li>

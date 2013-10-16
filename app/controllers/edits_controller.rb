@@ -52,7 +52,7 @@ class EditsController < ApplicationController
 
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def login_params
-      params.require(:login).permit(:public_id, :last_activity, :remember)
-    end
+    #def login_params
+      #params.require(:login).permit(:public_id, :last_activity, :remember)
+    #end
 end

@@ -1,56 +1,80 @@
-
-app_of_publics
-validates :public_id, :partner_app_id, :created_at, :updated_at, presence: true
-
-invitations
-validates :public_id, :partner_id, :headline, :list, :html, :posted, :effective, :expires, :created_at, :updated_at, presence: true
-
-listables
-validates :name, :topic, :description, :html, :created_at, :updated_at, presence: true
+require 'spec_helper'
 
 
-lists
-validates :public_id, :name, :visibility, :values, :last_activity, :created, :created_at, :updated_at, presence: true
+describe ListsController do
 
-logins
-validates :public_id, :last_activity, :remember, :created_at, :updated_at, presence: true
+  let(:person) { create :person }
+  let(:valid_session) { { :user_id => :person.id} }
 
-notices
-validates :public_id :headline, :html, :posted, :created_at, :updated_at, presence: true
+  describe "GET index" do
+    it "renders the angular grid partial" do
+      #publik = create :public   
+      #get :index, nil, {:user_id => publik.id}
+      publik = create :public   
+      create_list :list, 5, public_id: publik.id
+      request.session[:user_id] = publik.id
+      get :index, nil
+	  response.should render_template("shared/angular_grid_partial")
+    end
+  end
 
+  describe "POST create" do
+    describe "with valid params" do
+      it "creates a new List" do
+        listable = create :listable, name: 'Alpha'
+        publik = create :public
+        parameters = {:public_id => publik.id, '_json' => listable.id } 
+        was = List.count 
+        post :create, parameters 
+        List.count == was - 1
+        #expect {
+          #post :create, parameters
+        #}.to change(List, :count).by(1)
+      end
 
-offers
-validates :public_id, :partner_id, :list, :headline, :html, :posted, :effective, :expires, :created_at, :updated_at, presence: true
+      it "returns created message on success" do
+        listable = create :listable, name: 'Alpha'
+        publik = create :public
+        parameters = {:public_id => publik.id, '_json' => listable.id } 
+        post :create, parameters 
+        List.count == 1
+        response.body =="Alpha Created"
+        #expect(response.body).to eq("Alpha Created")
+      end
 
+      it "returns duplicate message on duplication" do
+        listable = create :listable, name: 'Alpha'
+        publik = create :public
+        parameters = {:public_id => publik.id, '_json' => listable.id } 
+        post :create, parameters 
+        post :create, parameters 
+        List.count == 2
+        response.body =="Duplicate List"
+        #expect(response.body).to eq("Duplicate List")
+      end
+    end
+  end
 
-partner_apps
-validates :partner_id, :name, :description, :url, :html, :created_at, :updated_at, presence: true
+  describe "PUT update" do
+    describe "with valid params" do
+      it "updates the requested list" do
+        #attributes = { "name" => "name", "values" => "[{}]", "visibility" => "Public" }
+        list = create :list 
+        visibility = 'Private' 
+        values = '[{"a":"b"}]'
+        updated = {:public_id => list.public_id, :id => list.id, :values => values , :visibility => visibility}
+        list.visibility == visibility && list.values == values
+      end
+    end
+  end
 
-
-partner_sites
-validates :partner_id, :name, :description, :url, :html, :created_at, :updated_at, presence: true
-
-
-partners
-validates :stormpath_id, :name, :description, :url, :html, :created_at, :updated_at, presence: true
-
-
-publics
-
-
-
-sessions
-validates :session_id, :data, :created_at, :updated_at, presence: true
-
-
-site_of_publics
-validates :public_id, :partner_site_id, :created_at, :updated_at, presence: true
-
-
-tokens
-validates :partner_id, :token_value, :last_login, :last_activity, :created_at, :updated_at, presence: true
-
-
-updates
-validates :public_id, :partner_id, :list, :headline, :html, :posted, :effective, :expires, :created_at, :updated_at, presence: true
-
+  describe "DELETE destroy" do
+    it "destroys the requested list" do
+      list = create :list
+      parameters = {:id => list.id, public_id: list.public_id} 
+      was = List.count
+      delete :destroy, parameters 
+      List.count == was - 1
+    end
+  end
+end

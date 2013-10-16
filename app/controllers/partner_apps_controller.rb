@@ -41,56 +41,53 @@ def index
 
   # GET /partner_apps/1
   # GET /partner_apps/1.json
-  def show
-  end
+  #def show
+  #end
 
   # GET /partner_apps/new
-  def new
-    @partner_app = PartnerApp.new
-  end
+  #def new
+    #@partner_app = PartnerApp.new
+  #end
 
   # GET /partner_apps/1/edit
-  def edit
-  end
+  #def edit
+  #end
 
   # POST /partner_apps
   # POST /partner_apps.json
   def create
-    app_id = params['_json']
-    public_id = params['public_id']
-    app = PartnerApp.find(app_id)
-    duplicates = AppOfPublic.where("public_id = #{public_id} and partner_app_id = #{app_id}")
-    if duplicates.count.zero?
-      AppOfPublic.create(public_id: public_id, partner_app_id: app_id) 
-      render :text => "#{app.name} Created"
-    else
+    if AppOfPublic.where(partner_app_id:  params['_json'], public_id: session['user_id']).exists?
       render :text => 'Duplicate App'
+    else
+      AppOfPublic.create partner_app_id:  params['_json'], public_id: session['user_id']
+      render :text => "App Created"
     end
   end
 
   # PATCH/PUT /partner_apps/1
   # PATCH/PUT /partner_apps/1.json
-  def update
-    respond_to do |format|
-      if @partner_app.update(partner_app_params)
-        format.html { redirect_to @partner_app, notice: 'Partner app was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @partner_app.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  #def update
+    #respond_to do |format|
+      #if @partner_app.update(partner_app_params)
+        #format.html { redirect_to @partner_app, notice: 'Partner app was successfully updated.' }
+        #format.json { head :no_content }
+      #else
+        #format.html { render action: 'edit' }
+        #format.json { render json: @partner_app.errors, status: :unprocessable_entity }
+      #end
+    #end
+  #end
 
   # DELETE /partner_apps/1
   # DELETE /partner_apps/1.json
-  def destroy
-    @partner_app.destroy
-    respond_to do |format|
-      format.html { redirect_to partner_apps_url }
-      format.json { head :no_content }
-    end
-  end
+  #def destroy
+    #@partner_app.destroy
+    #render :json => "ok"
+    #respond_to do |format|
+      #format.html { redirect_to partner_apps_url }
+      #format.json { head :no_content }
+    #end
+  #end
 
   private
     # Use callbacks to share common setup or constraints between actions.

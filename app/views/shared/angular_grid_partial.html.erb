@@ -58,32 +58,24 @@ var callbacks = '<%= j callbacks %>';
         $scope.$apply();
       }
 
-      //$scope.viewable = function()
-      //{
-        //if ($scope.theData.length == 0) return false;
-        //var first = $Scope.theData[0];
-        //return first.headline .list ||
-         //first.app_name || first.site_name;
-      //};
-
       $scope.edit = function()
       {
         var id = $scope.mySelections[0].id;
-        window.location = '/publics/' + $scope.userId + '/edits/' + id + '/edit';
+        window.location = '/edits/' + id + '/edit';
       };
 
       $scope.delete = function()
       {
         var controller = $scope.callbacks['delete'].controller;
         var id = $scope.mySelections[0].id;
-        url = '/publics/' + $scope.userId + '/' + controller + '/' + id;
+        url = '/' + controller + '/' + id;
         $scope.deleteUrl(url);
       };
       $scope.create = function()
       {
         var controller = $scope.callbacks['create'].controller;
         var id = $scope.mySelections[0].id;
-        url = '/publics/' + $scope.userId + '/' + controller
+        url = '/' + controller
         $scope.createUrl(url,id); 
       };
       $scope.view = function()
@@ -153,8 +145,8 @@ var callbacks = '<%= j callbacks %>';
      <input id='btnView' type='button' value='View Selected' ng-click='view()' 
       ng-show='!!theData[0].html' ng-disabled='!mySelections[0].id' class='btn btn-warning'
       style='display:inline-block;'>
-     <input id='btnAdd' type='button' value='Add Selected' ng-click='add()' ng-show='adding' 
-      ng-disabled='!mySelections[0].id' class='btn btn-success' style='display:inline-block;'>
+     <!--<input id='btnAdd' type='button' value='Add Selected' ng-click='add()' ng-show='adding' 
+      ng-disabled='!mySelections[0].id' class='btn btn-success' style='display:inline-block;'>-->
      <input id='btnDelete' type='button' value='Delete Selected' ng-click='delete()' 
       ng-show='deleting' ng-disabled='!mySelections[0].id' class='btn btn-danger' 
       style='display:inline-block;'>

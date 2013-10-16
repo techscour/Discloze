@@ -41,17 +41,17 @@ def index
 
   # GET /listables/1
   # GET /listables/1.json
-  def show
-  end
+  #def show
+  #end
 
   # GET /listables/new
-  def new
-    @listable = Listable.new.to_json
-  end
+  #def new
+    #@listable = Listable.new.to_json
+  #end
 
   # GET /listables/1/edit
-  def edit
-  end
+  #def edit
+  #end
 
   # POST /listables
   # POST /listables.json
@@ -60,37 +60,40 @@ def index
 
     respond_to do |format|
       if @listable.save
-        format.html { redirect_to @listable, notice: 'Listable was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @listable }
+        #format.html { redirect_to @listable, notice: 'Listable was successfully created.' }
+        #format.json { render action: 'show', status: :created, location: @listable }
+        render :json => "ok"
       else
-        format.html { render action: 'new' }
-        format.json { render json: @listable.errors, status: :unprocessable_entity }
+        render :json => "failed"
+        #format.html { render action: 'new' }
+        #format.json { render json: @listable.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # PATCH/PUT /listables/1
   # PATCH/PUT /listables/1.json
-  def update
-    respond_to do |format|
-      if @listable.update(listable_params)
-        format.html { redirect_to @listable, notice: 'Listable was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @listable.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  #def update
+    #respond_to do |format|
+      #if @listable.update(listable_params)
+        #format.html { redirect_to @listable, notice: 'Listable was successfully updated.' }
+        #format.json { head :no_content }
+      #else
+        #format.html { render action: 'edit' }
+        #format.json { render json: @listable.errors, status: :unprocessable_entity }
+      #end
+    #end
+  #end
 
   # DELETE /listables/1
   # DELETE /listables/1.json
   def destroy
     @listable.destroy
-    respond_to do |format|
-      format.html { redirect_to listables_url }
-      format.json { head :no_content }
-    end
+    render :json => "ok"
+    #respond_to do |format|
+      #format.html { redirect_to listables_url }
+      #format.json { head :no_content }
+    #end
   end
 
   private

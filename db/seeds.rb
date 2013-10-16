@@ -23,7 +23,7 @@ def create_listables
 			n.topic = "topic #{i}"
 			#n.html = Lorem::Base.new('paragraphs', 1).output
 			n.html = Faker::Lorem.paragraph
-			n.save
+			n.save!
 		end
 	end
 end
@@ -33,7 +33,7 @@ def create_publics
 		nu = Public.new do |n|
 			n.stormpath_id = "public#{i}"
 			n.last_login = "#{Time.now}"
-			n.save
+			n.save!
 		end
 		create_lists nu.id
 		create_offers nu.id
@@ -52,8 +52,8 @@ def create_partners
 			n.description = "partner description #{i}"
 			n.name = "partner name #{i}"
 			n.url = "partner url #{i}"
-			n.html = 
-			n.save
+			n.html = Faker::Lorem.paragraph
+			n.save!
 		end
 		create_partner_apps nu.id
 		create_partner_sites nu.id
@@ -68,7 +68,7 @@ def create_partner_apps  partner_id
 			n.name = "partner #{partner_id} app name #{i}"
 			n.html = "partner #{partner_id} app html #{i}"
 			n.url = "partner #{partner_id} app url #{i}"
-			n.save
+			n.save!
 		end
 	end
 end
@@ -81,7 +81,7 @@ def create_partner_sites partner_id
 			n.name = "partner #{partner_id} site name #{i}"
 			n.html = "partner #{partner_id} site html #{i}"
 			n.url = "partner #{partner_id} site url #{i}"
-			n.save
+			n.save!
 		end
 	end
 end
@@ -95,7 +95,7 @@ def create_lists public_id
 		    n.values = [{'item' => 'item 1', 'rating' => 8 },{'item' => 'item 2', 'rating' => 7 }].to_json
 		    n.last_activity =Time.now
 		    n.created = Time.now
-			n.save
+			n.save!
 		end
 	end
  end
@@ -111,7 +111,7 @@ def create_offers public_id
 			n.posted = Time.now 
 			n.effective = Time.now
 			n.expires = Time.now
-			n.save
+			n.save!
 		end
 	end
 end
@@ -127,7 +127,7 @@ def create_invitations public_id
 			n.posted = Time.now 
 			n.effective = Time.now
 			n.expires = Time.now
-			n.save
+			n.save!
 		end
 	end
 end
@@ -143,7 +143,7 @@ def create_updates public_id
 			n.posted = Time.now 
 			n.effective = Time.now
 			n.expires = Time.now
-			n.save
+			n.save!
 		end
 	end
 end
@@ -155,7 +155,7 @@ def create_notices public_id
 			n.headline = "notice headline #{i}"
 			n.html = "notice html #{i}"
 			n.posted = Time.now 
-			n.save
+			n.save!
 		end
 	end
  end
@@ -165,7 +165,7 @@ def create_public_sites public_id
 		nu = SiteOfPublic.new do |n|
 			n.public_id =  public_id
 			n.partner_site_id = rand 100
-			n.save
+			n.save!
 		end
 	end
  end
@@ -175,7 +175,7 @@ def create_public_apps public_id
 		nu = AppOfPublic.new do |n|
 			n.public_id =  public_id
 			n.partner_app_id = rand 100
-			n.save
+			n.save!
 		end
 	end
  end

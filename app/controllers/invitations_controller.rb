@@ -40,17 +40,17 @@ class InvitationsController < ApplicationController
 
   # GET /invitations/1
   # GET /invitations/1.json
-  def show
-  end
+  #def show
+  #end
 
   # GET /invitations/new
-  def new
-    @invitation = Invitation.new
-  end
+  #def new
+    #@invitation = Invitation.new
+  #end
 
   # GET /invitations/1/edit
-  def edit
-  end
+  #def edit
+  #end
 
   # POST /invitations
   # POST /invitations.json
@@ -59,37 +59,40 @@ class InvitationsController < ApplicationController
 
     respond_to do |format|
       if @invitation.save
-        format.html { redirect_to @invitation, notice: 'Invitation was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @invitation }
+        #format.html { redirect_to @invitation, notice: 'Invitation was successfully created.' }
+        #format.json { render action: 'show', status: :created, location: @invitation }
+        render :json => "ok"
       else
-        format.html { render action: 'new' }
-        format.json { render json: @invitation.errors, status: :unprocessable_entity }
+        render :json => "failed"
+        #format.html { render action: 'new' }
+        #format.json { render json: @invitation.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # PATCH/PUT /invitations/1
   # PATCH/PUT /invitations/1.json
-  def update
-    respond_to do |format|
-      if @invitation.update(invitation_params)
-        format.html { redirect_to @invitation, notice: 'Invitation was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @invitation.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  #def update
+    #respond_to do |format|
+      #if @invitation.update(invitation_params)
+        #format.html { redirect_to @invitation, notice: 'Invitation was successfully updated.' }
+        #format.json { head :no_content }
+      #else
+        #format.html { render action: 'edit' }
+        #format.json { render json: @invitation.errors, status: :unprocessable_entity }
+      #end
+    #end
+  #end
 
   # DELETE /invitations/1
   # DELETE /invitations/1.json
   def destroy
     @invitation.destroy
-    respond_to do |format|
-      format.html { redirect_to invitations_url }
-      format.json { head :no_content }
-    end
+    render :json => "ok"
+    #respond_to do |format|
+      #format.html { redirect_to invitations_url }
+      #format.json { head :no_content }
+    #end
   end
 
   private

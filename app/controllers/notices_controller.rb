@@ -36,13 +36,13 @@ class NoticesController < ApplicationController
   end
 
   # GET /notices/new
-  def new
-    @notice = Notice.new
-  end
+  #def new
+    #@notice = Notice.new
+  #end
 
   # GET /notices/1/edit
-  def edit
-  end
+  #def edit
+  #end
 
   # POST /notices
   # POST /notices.json
@@ -51,37 +51,40 @@ class NoticesController < ApplicationController
 
     respond_to do |format|
       if @notice.save
-        format.html { redirect_to @notice, notice: 'Notice was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @notice }
+        render :json => "ok"
+        #format.html { redirect_to @notice, notice: 'Notice was successfully created.' }
+        #format.json { render action: 'show', status: :created, location: @notice }
       else
-        format.html { render action: 'new' }
-        format.json { render json: @notice.errors, status: :unprocessable_entity }
+        render :json => "ok"
+        #format.html { render action: 'new' }
+        #format.json { render json: @notice.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # PATCH/PUT /notices/1
   # PATCH/PUT /notices/1.json
-  def update
-    respond_to do |format|
-      if @notice.update(notice_params)
-        format.html { redirect_to @notice, notice: 'Notice was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @notice.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  #def update
+    #respond_to do |format|
+      #if @notice.update(notice_params)
+        #format.html { redirect_to @notice, notice: 'Notice was successfully updated.' }
+        #format.json { head :no_content }
+      #else
+        #format.html { render action: 'edit' }
+        #format.json { render json: @notice.errors, status: :unprocessable_entity }
+      #end
+    #end
+  #end
 
   # DELETE /notices/1
   # DELETE /notices/1.json
   def destroy
     @notice.destroy
-    respond_to do |format|
-      format.html { redirect_to notices_url }
-      format.json { head :no_content }
-    end
+    render :json => "ok"
+    #respond_to do |format|
+      #format.html { redirect_to notices_url }
+      #format.json { head :no_content }
+    #end
   end
 
   private

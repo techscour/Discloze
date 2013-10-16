@@ -3,62 +3,64 @@ class TokensController < ApplicationController
 
   # GET /tokens
   # GET /tokens.json
-  def index
-    @tokens = Token.all
-  end
+  #def index
+  #  @tokens = Token.all
+  #end
 
   # GET /tokens/1
   # GET /tokens/1.json
-  def show
-  end
+  #def show
+  #end
 
   # GET /tokens/new
-  def new
-    @token = Token.new
-  end
+  #def new
+  #  @token = Token.new
+  #end
 
   # GET /tokens/1/edit
-  def edit
-  end
+  #def edit
+  #end
 
   # POST /tokens
   # POST /tokens.json
   def create
     @token = Token.new(token_params)
-
-    respond_to do |format|
+  #  respond_to do |format|
       if @token.save
-        format.html { redirect_to @token, notice: 'Token was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @token }
+  #      format.html { redirect_to @token, notice: 'Token was successfully created.' }
+  #      format.json { render action: 'show', status: :created, location: @token }
+        render :json => "ok"
       else
-        format.html { render action: 'new' }
-        format.json { render json: @token.errors, status: :unprocessable_entity }
+        render :json => "failed"
+  #      format.html { render action: 'new' }
+  #      format.json { render json: @token.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # PATCH/PUT /tokens/1
   # PATCH/PUT /tokens/1.json
-  def update
-    respond_to do |format|
-      if @token.update(token_params)
-        format.html { redirect_to @token, notice: 'Token was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @token.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  #def update
+    #respond_to do |format|
+      #if @token.update(token_params)
+        #format.html { redirect_to @token, notice: 'Token was successfully updated.' }
+        #format.json { head :no_content }
+      #else
+        #format.html { render action: 'edit' }
+        #format.json { render json: @token.errors, status: :unprocessable_entity }
+      #end
+    #end
+  #end
 
   # DELETE /tokens/1
   # DELETE /tokens/1.json
   def destroy
     @token.destroy
-    respond_to do |format|
-      format.html { redirect_to tokens_url }
-      format.json { head :no_content }
-    end
+    render :json => "ok"
+    #respond_to do |format|
+      #format.html { redirect_to tokens_url }
+      #format.json { head :no_content }
+    #end
   end
 
   private

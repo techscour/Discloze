@@ -84,7 +84,7 @@ var data = '<%= j data %>';
 
     $scope.destroy = function()
     {
-      var url = '/publics/' + $scope.user_id + '/lists/' + $scope.id;
+      var url = '/lists/' + $scope.id;
       $scope.deleteUrl(url);
     };
 
@@ -92,7 +92,7 @@ var data = '<%= j data %>';
     {
       var saved = { name: $scope.name, visibility: $scope.visibility, 
         values: $scope.theData};
-        var url = '/publics/' + $scope.user_id + '/lists/' + $scope.id;
+        var url = '/lists/' + $scope.id;
         $scope.putUrl(url,saved);
         $scope.edits = 0;
         window.onbeforeunload = null;

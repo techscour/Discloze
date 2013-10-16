@@ -39,56 +39,46 @@ def index
 
   # GET /app_of_publics/1
   # GET /app_of_publics/1.json
-  def show
-  end
+  #def show
+  #end
 
   # GET /app_of_publics/new
-  def new
-    @app_of_public = AppOfPublic.new
-  end
+  #def new
+    #@app_of_public = AppOfPublic.new
+  #end
 
   # GET /app_of_publics/1/edit
-  def edit
-  end
+  #def edit
+  #end
 
   # POST /app_of_publics
   # POST /app_of_publics.json
-  def create
-    @app_of_public = AppOfPublic.new(app_of_public_params)
-
-    respond_to do |format|
-      if @app_of_public.save
-        format.html { redirect_to @app_of_public, notice: 'App of public was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @app_of_public }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @app_of_public.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  #def create
+  #end
 
   # PATCH/PUT /app_of_publics/1
   # PATCH/PUT /app_of_publics/1.json
-  def update
-    respond_to do |format|
-      if @app_of_public.update(app_of_public_params)
-        format.html { redirect_to @app_of_public, notice: 'App of public was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @app_of_public.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  #def update
+    #respond_to do |format|
+      #if @app_of_public.update(app_of_public_params)
+        #format.html { redirect_to @app_of_public, notice: 'App of public was successfully updated.' }
+        #format.json { head :no_content }
+      #else
+        #format.html { render action: 'edit' }
+        #format.json { render json: @app_of_public.errors, status: :unprocessable_entity }
+      #end
+    #end
+  #end
 
   # DELETE /app_of_publics/1
   # DELETE /app_of_publics/1.json
   def destroy
     @app_of_public.destroy
-    respond_to do |format|
-      format.html { redirect_to app_of_publics_url }
-      format.json { head :no_content }
-    end
+    render :json => "ok"
+    #respond_to do |format|
+      #format.html { redirect_to app_of_publics_url }
+      #format.json { head :no_content }
+    #end
   end
 
   private

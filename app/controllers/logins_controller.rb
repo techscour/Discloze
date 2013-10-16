@@ -3,23 +3,23 @@ class LoginsController < ApplicationController
 
   # GET /logins
   # GET /logins.json
-  def index
-    @logins = Login.all
-  end
+  #def index
+    #@logins = Login.all
+  #end
 
   # GET /logins/1
   # GET /logins/1.json
-  def show
-  end
+  #def show
+  #end
 
   # GET /logins/new
-  def new
-    @login = Login.new
-  end
+  #def new
+    #@login = Login.new
+  #end
 
   # GET /logins/1/edit
-  def edit
-  end
+  #def edit
+  #end
 
   # POST /logins
   # POST /logins.json
@@ -28,11 +28,13 @@ class LoginsController < ApplicationController
 
     respond_to do |format|
       if @login.save
-        format.html { redirect_to @login, notice: 'Login was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @login }
+        #format.html { redirect_to @login, notice: 'Login was successfully created.' }
+        render :json => "ok"
+        #format.json { render action: 'show', status: :created, location: @login }
       else
-        format.html { render action: 'new' }
-        format.json { render json: @login.errors, status: :unprocessable_entity }
+        render :json => "failed"
+        #format.html { render action: 'new' }
+        #format.json { render json: @login.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -42,11 +44,13 @@ class LoginsController < ApplicationController
   def update
     respond_to do |format|
       if @login.update(login_params)
-        format.html { redirect_to @login, notice: 'Login was successfully updated.' }
-        format.json { head :no_content }
+        #format.html { redirect_to @login, notice: 'Login was successfully updated.' }
+        #format.json { head :no_content }
+        render :json => "ok"
       else
-        format.html { render action: 'edit' }
-        format.json { render json: @login.errors, status: :unprocessable_entity }
+        #format.html { render action: 'edit' }
+        render :json => "failed"
+        #format.json { render json: @login.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -55,10 +59,11 @@ class LoginsController < ApplicationController
   # DELETE /logins/1.json
   def destroy
     @login.destroy
-    respond_to do |format|
-      format.html { redirect_to logins_url }
-      format.json { head :no_content }
-    end
+    render :json => "ok"
+    #respond_to do |format|
+      #format.html { redirect_to logins_url }
+      #format.json { head :no_content }
+    #end
   end
 
   private
