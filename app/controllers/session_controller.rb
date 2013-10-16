@@ -28,7 +28,6 @@ class SessionController < ApplicationController
     render :json => 'true' 
   end
 
-
   def landing
     extend Rails.application.routes.url_helpers
   end

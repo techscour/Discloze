@@ -33,7 +33,7 @@ var callbacks = '<%= j callbacks %>';
 
       callbacks = '{"tuples": ' + $('#hiding').html(callbacks).text() + '}';
       $scope.callbacks = JSON.parse(callbacks).tuples;
-      console.log(JSON.stringify(callbacks));
+      //console.log(JSON.stringify(callbacks));
 
       $scope.deleting = !!$scope.callbacks['delete'];
       $scope.creating = !!$scope.callbacks['create'];

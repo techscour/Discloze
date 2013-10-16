@@ -10,20 +10,12 @@ SimpleAuth::Application.routes.draw do
   resources :app_of_publics, only: [:index, :destroy]
   resources :notices, only: [:index, :destroy]
   resources :edits, only: [:edit]
-  #resources :emails, only: [:create]
   resources :partner_apps, only: [:create]
   resources :partner_sites, only: [:create]
-
   resources :listables, only: [:index]
   resources :partner_apps, only: [:index]
   resources :partner_sites, only: [:index]
 
-  #resources :partners, only: [:index, :get, :create, :update, :destroy] do
-    #resources :partner_apps, only: [:index, :get, :create, :update, :destroy]
-    #resources :partner_sites, only: [:index,:get, :create, :update, :destroy]
-  #end
-
-  #resources :listables, only: [:index]
   namespace :session do
     get "landing"
     get "signin"

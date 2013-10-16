@@ -2,7 +2,6 @@ class SiteOfPublicsController < ApplicationController
   before_action :set_site_of_public, only: [:show, :edit, :update, :destroy]
 
   # GET /site_of_publics
-  # GET /site_of_publics.json
  def index
 
    fetcher = lambda { |sort_field, direction, page, per|
@@ -32,75 +31,21 @@ class SiteOfPublicsController < ApplicationController
       {field:'description', displayName:'Description', order: 'partner_sites.description'}
    ]
 
-
    angular_grid_simple_helper 'shared/angular_grid_partial', 'Your Sites', \
      fetcher, cooker, columns, callbacks
   end
 
-  # GET /site_of_publics/1
-  # GET /site_of_publics/1.json
-  #def show
-  #end
-
-  # GET /site_of_publics/new
-  #def new
-    #@site_of_public = SiteOfPublic.new
-  #end
-
-  # GET /site_of_publics/1/edit
-  #def edit
-  #end
-
-  # POST /site_of_publics
-  # POST /site_of_publics.json
-  #def create
-  #  @site_of_public = SiteOfPublic.new(site_of_public_params)
-
-  #  respond_to do |format|
-  #    if @site_of_public.save
-        #format.html { redirect_to @site_of_public, notice: 'Site of public was successfully created.' }
-  #      render :json => "ok"
-        #format.json { render action: 'show', status: :created, location: @site_of_public }
-  #    else
-        #format.html { render action: 'new' }
-  #      render :json => "failed"
-        #format.json { render json: @site_of_public.errors, status: :unprocessable_entity }
-  #    end
-  #  end
-  #end
-
-  # PATCH/PUT /site_of_publics/1
-  # PATCH/PUT /site_of_publics/1.json
-  #def update
-    #respond_to do |format|
-      #if @site_of_public.update(site_of_public_params)
-        #format.html { redirect_to @site_of_public, notice: 'Site of public was successfully updated.' }
-        #format.json { head :no_content }
-      #else
-        #format.html { render action: 'edit' }
-        #format.json { render json: @site_of_public.errors, status: :unprocessable_entity }
-      #end
-    #end
-  #end
-
   # DELETE /site_of_publics/1
-  # DELETE /site_of_publics/1.json
   def destroy
     @site_of_public.destroy
     render :json => "ok"
-    #respond_to do |format|
-      #format.html { redirect_to site_of_publics_url }
-      #format.json { head :no_content }
-    #end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_site_of_public
-      @site_of_public = SiteOfPublic.find(params[:id])
+      @site_of_public = SiteOfPublic.where(:id=>params[:id],:public_id => @user_id).first
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def site_of_public_params
       params.require(:site_of_public).permit(:public_id, :partner_site_id)
     end

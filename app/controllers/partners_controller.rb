@@ -1,14 +1,12 @@
 class PartnersController < ApplicationController
-  before_action :set_partner, only: [:show, :edit, :update, :destroy]
+  before_action :set_partner, only: [:edit, :update, :destroy]
 
   # GET /partners
-  # GET /partners.json
   def index
     @partners = Partner.all
   end
 
   # GET /partners/1
-  # GET /partners/1.json
   def show
   end
 
@@ -22,7 +20,6 @@ class PartnersController < ApplicationController
   end
 
   # POST /partners
-  # POST /partners.json
   def create
     @partner = Partner.new(partner_params)
 
@@ -38,7 +35,6 @@ class PartnersController < ApplicationController
   end
 
   # PATCH/PUT /partners/1
-  # PATCH/PUT /partners/1.json
   def update
     respond_to do |format|
       if @partner.update(partner_params)
@@ -52,7 +48,6 @@ class PartnersController < ApplicationController
   end
 
   # DELETE /partners/1
-  # DELETE /partners/1.json
   def destroy
     @partner.destroy
     respond_to do |format|

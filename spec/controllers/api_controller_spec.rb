@@ -18,7 +18,6 @@ describe Apis::ApiController do
       })
 
    end
-   #@token = "secret"
   end
 	before(:each) do
     @partner = create :partner, :stormpath_id => 'apitester'   

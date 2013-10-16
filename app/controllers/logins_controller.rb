@@ -1,69 +1,30 @@
 class LoginsController < ApplicationController
-  before_action :set_login, only: [:show, :edit, :update, :destroy]
-
-  # GET /logins
-  # GET /logins.json
-  #def index
-    #@logins = Login.all
-  #end
-
-  # GET /logins/1
-  # GET /logins/1.json
-  #def show
-  #end
-
-  # GET /logins/new
-  #def new
-    #@login = Login.new
-  #end
-
-  # GET /logins/1/edit
-  #def edit
-  #end
+  before_action :set_login, only: [:edit, :update, :destroy]
 
   # POST /logins
-  # POST /logins.json
   def create
     @login = Login.new(login_params)
 
-    respond_to do |format|
-      if @login.save
-        #format.html { redirect_to @login, notice: 'Login was successfully created.' }
-        render :json => "ok"
-        #format.json { render action: 'show', status: :created, location: @login }
-      else
-        render :json => "failed"
-        #format.html { render action: 'new' }
-        #format.json { render json: @login.errors, status: :unprocessable_entity }
-      end
+    if @login.save
+      render :json => "ok"
+    else
+      render :json => "failed"
     end
   end
 
   # PATCH/PUT /logins/1
-  # PATCH/PUT /logins/1.json
   def update
-    respond_to do |format|
       if @login.update(login_params)
-        #format.html { redirect_to @login, notice: 'Login was successfully updated.' }
-        #format.json { head :no_content }
         render :json => "ok"
       else
-        #format.html { render action: 'edit' }
         render :json => "failed"
-        #format.json { render json: @login.errors, status: :unprocessable_entity }
       end
-    end
   end
 
   # DELETE /logins/1
-  # DELETE /logins/1.json
   def destroy
     @login.destroy
     render :json => "ok"
-    #respond_to do |format|
-      #format.html { redirect_to logins_url }
-      #format.json { head :no_content }
-    #end
   end
 
   private

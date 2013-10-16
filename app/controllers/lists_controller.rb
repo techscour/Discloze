@@ -2,37 +2,34 @@ class ListsController < ApplicationController
   before_action :set_list, only: [:update, :destroy]
 
   # GET /lists
-  # GET /lists.json
-def index
+  def index
+    fetcher = lambda { |sort_field, direction, page, per|
+      records = List.where(:public_id => @user_id)
+      [records.count, records.order(sort_field + ' ' + direction).page(page).per(per)]
+    }
 
-  fetcher = lambda { |sort_field, direction, page, per|
-    records = List.where(:public_id => session[:user_id])
-    [records.count, records.order(sort_field + ' ' + direction).page(page).per(per)]
-  }
+    cooker = lambda  { |raws|
+      raws.map do |raw|
+        {
+          'id' => raw.id,
+          'name' => raw.name,
+          'visibility' => raw.visibility
+        }
+      end
+    } 
+    callbacks = {
+      :edit => {:controller => 'lists' }
+    }
+    columns = [  
+      {field:'name', displayName: 'Name', order: 'name'},
+      {field:'visibility', displayName: 'Visbility', order: 'visibility'}
+    ]
 
-  cooker = lambda  { |raws|
-    raws.map do |raw|
-      {
-        'id' => raw.id,
-        'name' => raw.name,
-        'visibility' => raw.visibility
-      }
+     angular_grid_simple_helper 'shared/angular_grid_partial', 'My Lists', \
+       fetcher, cooker, columns, callbacks
     end
-  } 
-  callbacks = {
-    :edit => {:controller => 'lists' }
-  }
-  columns = [  
-    {field:'name', displayName: 'Name', order: 'name'},
-    {field:'visibility', displayName: 'Visbility', order: 'visibility'}
-  ]
-
-   angular_grid_simple_helper 'shared/angular_grid_partial', 'My Lists', \
-     fetcher, cooker, columns, callbacks
-  end
 
   # POST /lists
-  # POST /lists.json
   def create
     listable = Listable.find_by_id(params['_json'])
     if listable.nil?
@@ -40,7 +37,7 @@ def index
     elsif List.find_by_name(listable.name).present?
       render :json => 'Duplicate List'
     else
-      list = List.create!(public_id:  params['public_id'], name: listable.name,\
+      list = List.create!(public_id:  @user_id, name: listable.name,\
        visibility: 'Public', values: '[{}]', created: Time.now.utc, \
        last_activity: Time.now.utc  )
       render :json => "#{listable.name} Created"
@@ -48,7 +45,6 @@ def index
   end
 
   # PATCH/PUT /lists/1
-  # PATCH/PUT /lists/1.json
   def update
     if @list.update(:values => params[:values].to_json, :name => params[:name],\
        :visibility => params[:visibility]) 
@@ -59,7 +55,6 @@ def index
   end
 
   # DELETE /lists/1
-  # DELETE /lists/1.json
   def destroy
     @list.destroy
     render :nothing => true
@@ -68,7 +63,7 @@ def index
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_list
-      @list = List.find(params[:id])
+      @list = List.where(:id=>params[:id],:public_id => @user_id).first
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def list_params

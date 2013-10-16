@@ -1,4 +1,3 @@
-
 class MobilesController < ActionController::Base
 
   	include SessionHelper 
@@ -17,6 +16,7 @@ class MobilesController < ActionController::Base
 		  render :json => false
 		end
 	end
+
 	def lists
 		if session[:user]
 			render :json => List.where(:public_id => session[:user_id]) 
@@ -24,6 +24,7 @@ class MobilesController < ActionController::Base
 			render :json => 'unauthorized'	, :status => :unauthorized
 		end
 	end
+
 	def list
 		if session[:user]
 			render :json => List.where(:id => params['list_id']).to_json
@@ -31,6 +32,7 @@ class MobilesController < ActionController::Base
 			render :json => 'unauthorized'	, :status => :unauthorized
 		end
 	end
+	
 	def logout
 		reset_session
 		redirect_to mobiles_landing_url
