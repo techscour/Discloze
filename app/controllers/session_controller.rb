@@ -53,12 +53,13 @@ class SessionController < ApplicationController
   end
 
   def signup
-    render :signup, :locals => {:values => {}}
+    @values = {}
+    render :signup
   end
 
   def update
     account = stormpath_get_account
-    values = {
+    @values = {
       'email' => account.email,
       'href' => account.href,
       'first' => account.given_name,
@@ -67,7 +68,7 @@ class SessionController < ApplicationController
       'year' => '',
       'gender' => ''
       }
-    render :update, :locals => {:values => values}
+    render :update
   end
 
   def passup
@@ -84,7 +85,8 @@ class SessionController < ApplicationController
       redirect_to root_url
     else
       flash[:alert] = amended
-      render :update,   :locals => {:values => params}
+      @values = params
+      render :update 
     end
   end
 
@@ -95,7 +97,7 @@ class SessionController < ApplicationController
       redirect_to  root_url 
     else
       flash[:alert] = altered
-      render :passup,   :locals => {:values => params}
+      render :passup
     end
   end
 
@@ -106,7 +108,8 @@ class SessionController < ApplicationController
       redirect_to root_url
     else
       flash[:alert] = added
-      render :signup,   :locals => {:values => params}
+      @values = params
+      render :signup
     end
   end
 
@@ -144,8 +147,7 @@ class SessionController < ApplicationController
 
   def abolish
     stormpath_delete_account
-    pub = Public.find_by_stormpath_id('David')
-    pub.destroy
+    Public.find_by_stormpath_id(session[:user]).destroy!
     reset_session
     redirect_to root_url
     flash[:notice] = "Your account has been deleted."

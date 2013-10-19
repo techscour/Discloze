@@ -6,22 +6,20 @@
 }
 </style>
 <%= javascript_tag do %>
-var data = '<%= j data %>';
-var columns = '<%= j columns %>';
-var callbacks = '<%= j callbacks %>';
+var data = '<%= j @values[:data] %>';
+var columns = '<%= j @values[:columns] %>';
+var callbacks = '<%= j @values[:callbacks] %>';
 <% end %>
 <div id="hiding" style='display:none'></div>
 <script type="text/javascript">
 
-//theModule.controller('MyCtrl', function($scope, $http) {
-  
   var MyCtrl =function($scope, $http) {
 
-      $scope.maxSize = parseInt('<%= size %>');
-      $scope.sortInfo = [{ fields:[('<%= field %>')], directions: [('<%= field %>')]}];
-      $scope.totalItems = parseInt('<%= total %>');
-      $scope.currentPage = parseInt('<%= page %>');
-      $scope.userId = parseInt('<%= user_id %>');
+      $scope.maxSize = parseInt('<%= @values[:size] %>');
+      $scope.sortInfo = [{ fields:[('<%= @values[:field] %>')], directions: [('<%= @values[:field] %>')]}];
+      $scope.totalItems = parseInt('<%= @values[:total] %>');
+      $scope.currentPage = parseInt('<%= @values[:page] %>');
+      $scope.userId = parseInt('<%= @values[:user_id] %>');
       $scope.mySelections = [];
       $scope.id = -1;
       $scope.authenticity_token = '<%= form_authenticity_token %>';
@@ -133,15 +131,13 @@ var callbacks = '<%= j callbacks %>';
       $('#alertModal').on('hidden', function () {
         $scope.getNextPage();
       });
-      
   }
-
 </script>
 
 
-<div class="well" ng-controller='MyCtrl' >
+<div class="well" ng-controller='MyCtrl' ng-cloak >
   <div>
-    <h1 style='display:inline-block;'><%= header %>
+    <h1 style='display:inline-block;'><%= @values[:header] %>
      <input id='btnView' type='button' value='View Selected' ng-click='view()' 
       ng-show='!!theData[0].html' ng-disabled='!mySelections[0].id' class='btn btn-warning'
       style='display:inline-block;'>

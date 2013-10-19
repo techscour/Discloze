@@ -7,7 +7,7 @@ class ListsController < ApplicationController
       records = List.where(:public_id => @user_id)
       [records.count, records.order(sort_field + ' ' + direction).page(page).per(per)]
     }
-
+   
     cooker = lambda  { |raws|
       raws.map do |raw|
         {

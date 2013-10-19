@@ -14,20 +14,18 @@
 }
 </style>
 <%= javascript_tag do %>
-var data = '<%= j data %>';
+var data = '<%= j @values[:data] %>';
 
 <% end %>
 <div id="hiding" style='display:none'></div>
 <script type="text/javascript">
 
-//theModule.controller('MyCtrl', function($scope, $http) {
-
   var MyCtrl =function($scope, $http) {
 
-    $scope.visibility = '<%= visibility %>';
-    $scope.name = '<%= name %>';
-    $scope.user_id = '<%= user_id %>';
-    $scope.id = '<%= id %>';
+    $scope.visibility = '<%= @values[:visibility] %>';
+    $scope.name = '<%= @values[:name] %>';
+    $scope.user_id = '<%= @values[:user_id] %>';
+    $scope.id = '<%= @values[:id] %>';
     $scope.rating = 5;
     $scope.item = '';
     $scope.item_dirty = false;
@@ -231,7 +229,7 @@ var data = '<%= j data %>';
               $scope.alertMessage = 'Deleted';
               $('#alertModal').modal('show'); 
               window.onbeforeunload = null;
-              window.location = '<%= root_url %>';
+              window.location = '<%= @values[:root_url] %>';
             }).error(function(a) {
               $scope.alertMessage = 'Delete Failed';
               $('#alertModal').modal('show'); 
@@ -239,7 +237,6 @@ var data = '<%= j data %>';
           }, 100);
         };
         $scope.putUrl = function (url,data) {
-          //alert([url,JSON.stringify(data)]);
           setTimeout(function () {
             $http.put(url,data).success(function () {
               $scope.alertMessage = 'Updated';
@@ -273,10 +270,10 @@ var data = '<%= j data %>';
 
       </script>
 
-      <div ng-controller='MyCtrl' >
+      <div ng-controller='MyCtrl' ng-cloak >
         <div class="well">
           <div>
-            <h1 style='display:inline-block;'><%= name %>
+            <h1 style='display:inline-block;'><%= @values[:name] %>
               <select ng-model='visibility' style='width:100;vertical-align:middle' 
               ng-options="o for o in ['Offers','Public','Protected','Private']">
             </select>

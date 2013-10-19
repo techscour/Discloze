@@ -5,6 +5,7 @@
   <%= csrf_meta_tags %>
   <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="http://angular-ui.github.com/ng-grid/css/ng-grid.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
   <style type="text/css">
       body {
         padding-top: 50px;
@@ -21,6 +22,9 @@
       .alert {
        color: red;
       }
+      [ng\:cloak], [ng-cloak], .ng-cloak {
+          display: none !important;
+        }
   </style>
 </head>
 <body ng-app='theModule'>
@@ -40,14 +44,14 @@
             <li class="dropdown">
               <a href="/" class="dropdown-toggle" data-toggle="dropdown">Your Services <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="<%= lists_url(:public_id => @user) %>">My Lists</a></li>
-                <li><a href="<%= invitations_url(:public_id => @user) %>">My Invitations</a></li>
-                <li><a href="<%= updates_url(:public_id => @user) %>">My Updates</a></li>
-                <li><a href="<%= notices_url(:public_id => @user) %>">My Notices</a></li>
-                <li><a href="<%= offers_url(:public_id => @user) %>">My Offers</a></li>
+                <li><a href="<%= lists_url %>">My Lists</a></li>
+                <li><a href="<%= invitations_url %>">My Invitations</a></li>
+                <li><a href="<%= updates_url %>">My Updates</a></li>
+                <li><a href="<%= notices_url %>">My Notices</a></li>
+                <li><a href="<%= offers_url %>">My Offers</a></li>
                 <li class="divider"></li>
-                <li><a href="<%= app_of_publics_url(:public_id => @user) %>">My Apps</a></li>
-                <li><a href="<%= site_of_publics_url(:public_id => @user) %>">My Sites</a></li>
+                <li><a href="<%= app_of_publics_url %>">My Apps</a></li>
+                <li><a href="<%= site_of_publics_url %>">My Sites</a></li>
                 <li class="divider"></li>
                 <li><a href="<%= listables_url %>">List Catalog</a></li>
                 <li><a href="<%= partner_apps_url %>">App Catalog</a></li>
@@ -91,7 +95,7 @@
   </div>
   <script src="//code.jquery.com/jquery.js"></script>
   <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+
   <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
   <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
   <script type="text/javascript" src="http://angular-ui.github.com/ng-grid/lib/ng-grid.debug.js"></script>

@@ -1,18 +1,18 @@
 <script type="text/javascript">
 	var update_controller = function($scope) {
-		$scope.email = '<%= values['email'] %>';
-		$scope.first  = '<%= values['first'] %>';
-		$scope.last  = '<%= values['last'] %>';
-		$scope.zip = parseInt('<%= values['zip'] %>');
-		$scope.year  = parseInt('<%= values['year'] %>');
-		$scope.gender  = '<%= values['gender'] %>';
+		$scope.email = '<%= @values['email'] %>';
+		$scope.first  = '<%= @values['first'] %>';
+		$scope.last  = '<%= @values['last'] %>';
+		$scope.zip = parseInt('<%= @values['zip'] %>');
+		$scope.year  = parseInt('<%= @values['year'] %>');
+		$scope.gender  = '<%= @values['gender'] %>';
 		if ($scope.user != '')
 		{
 			$('#editUserForm').addClass('ng-dirty');
 		}
 	}
 </script>
-<div class="well css-form" ng-controller='update_controller' >
+<div class="well css-form" ng-controller='update_controller' ng-cloak >
 	<form role="form" name='editUserForm' id='editUserForm' method='POST' 
 	 action='<%= session_amend_url %>' >
 		<h1>Update Your Information</h1>

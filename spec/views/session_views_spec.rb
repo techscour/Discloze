@@ -28,8 +28,8 @@ describe "session/signup" do
 	it "contains Tell Us About Yourself" do
 		values = {'email' => "a@b.com", 'first' => "first", 'last' => "last",\
 			'zip' => "12345", 'year' => "1984", 'gender' => "male"}
-		# view, controller, template, request, and reply are instance variables
-		view.stub(:values) { values }
+		# note that view, controller, template, request, and reply are instance variables
+		assign(:values,values)
 		render
     	expect(rendered).to include("Tell Us About Yourself")
   	end
@@ -38,7 +38,7 @@ describe "session/update" do
 	it "contains Update Your Information" do
 		values = {'email' => "a@b.com", 'first' => "first", 'last' => "last",\
 			'zip' => "12345", 'year' => "1984", 'gender' => "male"}
-		view.stub(:values) { values }
+		assign(:values,values)
 		render
     	expect(rendered).to include("Update Your Information")
   	end

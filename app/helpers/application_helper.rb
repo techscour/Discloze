@@ -18,11 +18,10 @@ module ApplicationHelper
 
   
     total, items = fetcher[sort_field, direction, page, size]
-    
     cooked = cooker[items]
-
-    render partial, :locals => {:data => cooked.to_json, :total =>  total, :columns => columns.to_json, \
+    @values = {:data => cooked.to_json, :total =>  total, :columns => columns.to_json, \
      :size => size, :page => page, :field => field, :direction => direction, :header => headline, \
      :callbacks => callbacks.to_json, :user_id => @user_id }
+    render partial
    end
 end

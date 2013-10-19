@@ -1,22 +1,22 @@
 
 <script type="text/javascript">
 	var signup_controller = function($scope) {
-		$scope.user  = '<%= values['user'] %>';	
-		$scope.email = '<%= values['email'] %>';
-		$scope.pass1  = '<%= values['pass1'] %>';	
-		$scope.pass2 = '<%= values['pass2'] %>';
-		$scope.first  = '<%= values['first'] %>';
-		$scope.last  = '<%= values['last'] %>';
-		$scope.zip = parseInt('<%= values['zip'] %>');
-		$scope.year  = parseInt('<%= values['year'] %>');
-		$scope.gender  = '<%= values['gender'] %>';
+		$scope.user  = '<%= @values['user'] %>';	
+		$scope.email = '<%= @values['email'] %>';
+		$scope.pass1  = '<%= @values['pass1'] %>';	
+		$scope.pass2 = '<%= @values['pass2'] %>';
+		$scope.first  = '<%= @values['first'] %>';
+		$scope.last  = '<%= @values['last'] %>';
+		$scope.zip = parseInt('<%= @values['zip'] %>');
+		$scope.year  = parseInt('<%= @values['year'] %>');
+		$scope.gender  = '<%= @values['gender'] %>';
 		if ($scope.user != '')
 		{
 			$('#signUpForm').addClass('ng-dirty');
 		}
 	}
 </script>
-<div class="well css-form" ng-controller='signup_controller' >
+<div class="well css-form" ng-controller='signup_controller' ng-cloak >
 	<form role="form" name='signUpForm' id='signUpForm' method='POST' 
 		action='<%= session_add_url %>'>
 		<h1>Tell Us About Yourself</h1>
