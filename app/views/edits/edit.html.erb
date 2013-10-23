@@ -13,19 +13,18 @@
   background-color: #78FA89;
 }
 </style>
-<%= javascript_tag do %>
-var data = '<%= j @values[:data] %>';
-
-<% end %>
+<script>
+  var values = <%= raw @values %>;
+</script>
 <div id="hiding" style='display:none'></div>
 <script type="text/javascript">
 
   var MyCtrl =function($scope, $http) {
-
-    $scope.visibility = '<%= @values[:visibility] %>';
-    $scope.name = '<%= @values[:name] %>';
-    $scope.user_id = '<%= @values[:user_id] %>';
-    $scope.id = '<%= @values[:id] %>';
+    $scope.values = values
+    $scope.visibility = $scope.values.visibility;
+    $scope.name = $scope.values.name;
+    $scope.user_id = $scope.values.user_id;
+    $scope.id = $scope.values.id
     $scope.rating = 5;
     $scope.item = '';
     $scope.item_dirty = false;
@@ -39,15 +38,12 @@ var data = '<%= j @values[:data] %>';
     $scope.body = '';
     $scope.mySelections = [];
     $scope.columns = [  
-    {field:'rating', displayName: 'Rating'},
-    {field:'item', displayName: 'Item'}
+      {field:'rating', displayName: 'Rating'},
+      {field:'item', displayName: 'Item'}
     ];
     $scope.sortInfo = [{ fields:[('item')], directions: [('asc')]}];
 
-    data = '{"tuples": ' + $('#hiding').html(data).text() + '}';
-    data = JSON.parse(data).tuples;
-    if (data == '""') data = [];
-    $scope.theData = data;
+    $scope.theData = JSON.parse($scope.values.data);
     if (!$scope.$$phase) {
       $scope.$apply();
     }
@@ -114,9 +110,6 @@ var data = '<%= j @values[:data] %>';
 
         $scope.email = function()
         {
-          //var mail = { name: $scope.name, visibility: $scope.visibility, 
-            //values: $scope.theData, mail_to: $scope.mail_to, subject: $scope.subject,
-            //body: $scope.message };
           $scope.clearEmailForm();
           $scope.subject = 'My ' + $scope.name + ' List';
           $('#emailModal').modal('show');
@@ -124,10 +117,8 @@ var data = '<%= j @values[:data] %>';
 
         $scope.download = function()
         {
-          //var download = {list: $scope.name, visibility: $scope.visibility, data: $scope.data};
           var url = '/session/download?name='+ $scope.name;
           window.location = url;
-          //$scope.postUrl(url,download);
         };
         $scope.clearEmailForm = function()
         {
@@ -229,7 +220,7 @@ var data = '<%= j @values[:data] %>';
               $scope.alertMessage = 'Deleted';
               $('#alertModal').modal('show'); 
               window.onbeforeunload = null;
-              window.location = '<%= @values[:root_url] %>';
+              window.location = values.root_url;
             }).error(function(a) {
               $scope.alertMessage = 'Delete Failed';
               $('#alertModal').modal('show'); 
@@ -273,7 +264,7 @@ var data = '<%= j @values[:data] %>';
       <div ng-controller='MyCtrl' ng-cloak >
         <div class="well">
           <div>
-            <h1 style='display:inline-block;'><%= @values[:name] %>
+            <h1 style='display:inline-block'>{{values.name}}
               <select ng-model='visibility' style='width:100;vertical-align:middle' 
               ng-options="o for o in ['Offers','Public','Protected','Private']">
             </select>

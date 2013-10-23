@@ -5,33 +5,28 @@
   height: 500px;
 }
 </style>
-<%= javascript_tag do %>
-var data = '<%= j @values[:data] %>';
-var columns = '<%= j @values[:columns] %>';
-var callbacks = '<%= j @values[:callbacks] %>';
-<% end %>
-<div id="hiding" style='display:none'></div>
+<script>
+  var values = '<%= raw @values %>';
+  var fat = '<%= form_authenticity_token %>';
+</script>
+
 <script type="text/javascript">
 
   var MyCtrl =function($scope, $http) {
 
-      $scope.maxSize = parseInt('<%= @values[:size] %>');
-      $scope.sortInfo = [{ fields:[('<%= @values[:field] %>')], directions: [('<%= @values[:field] %>')]}];
-      $scope.totalItems = parseInt('<%= @values[:total] %>');
-      $scope.currentPage = parseInt('<%= @values[:page] %>');
-      $scope.userId = parseInt('<%= @values[:user_id] %>');
+      $scope.values = JSON.parse(values);
+      $scope.maxSize = parseInt($scope.values.size);
+      $scope.sortInfo = [{ fields:[("'" + $scope.values.field + "'")], 
+        directions: [("'" + $scope.values.direction+ "'")]}];
+      $scope.totalItems = parseInt($scope.values.total);
+      $scope.currentPage = parseInt($scope.values.page);
+      $scope.userId = parseInt($scope.values.user_id);
       $scope.mySelections = [];
       $scope.id = -1;
-      $scope.authenticity_token = '<%= form_authenticity_token %>';
-      $scope.alertMessage ='';
+      $scope.authenticity_token = fat;
+      //$scope.alertMessage ='';
 
-
-      columns = '{"tuples": ' + $('#hiding').html(columns).text() + '}';
-      columns = JSON.parse(columns).tuples;
-
-      callbacks = '{"tuples": ' + $('#hiding').html(callbacks).text() + '}';
-      $scope.callbacks = JSON.parse(callbacks).tuples;
-      //console.log(JSON.stringify(callbacks));
+      $scope.callbacks = $scope.values.callbacks;
 
       $scope.deleting = !!$scope.callbacks['delete'];
       $scope.creating = !!$scope.callbacks['create'];
@@ -43,15 +38,13 @@ var callbacks = '<%= j @values[:callbacks] %>';
         sortinfo: $scope.sortInfo,
         showFooter: false,
         useExternalSorting: true,
-        columnDefs: columns,
+        columnDefs: $scope.values.columns,
         selectedItems: $scope.mySelections,
         multiSelect: false,
         filterOptions: $scope.filterOptions
       };
 
-      data = '{"tuples": ' + $('#hiding').html(data).text() + '}';
-      data = JSON.parse(data).tuples;
-      $scope.theData = data;
+      $scope.theData = $scope.values.data;
       if (!$scope.$$phase) {
         $scope.$apply();
       }
@@ -137,7 +130,7 @@ var callbacks = '<%= j @values[:callbacks] %>';
 
 <div class="well" ng-controller='MyCtrl' ng-cloak >
   <div>
-    <h1 style='display:inline-block;'><%= @values[:header] %>
+    <h1 style='display:inline-block;'>{{values.header}}
      <input id='btnView' type='button' value='View Selected' ng-click='view()' 
       ng-show='!!theData[0].html' ng-disabled='!mySelections[0].id' class='btn btn-warning'
       style='display:inline-block;'>
