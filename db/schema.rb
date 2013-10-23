@@ -20,8 +20,8 @@ ActiveRecord::Schema.define(version: 20130930153952) do
     t.datetime "updated_at"
   end
 
-  add_index "app_of_publics", ["partner_app_id"], name: "index_app_of_publics_on_partner_app_id"
-  add_index "app_of_publics", ["public_id"], name: "index_app_of_publics_on_public_id"
+  add_index "app_of_publics", ["partner_app_id"], name: "index_app_of_publics_on_partner_app_id", using: :btree
+  add_index "app_of_publics", ["public_id"], name: "index_app_of_publics_on_public_id", using: :btree
 
   create_table "invitations", force: true do |t|
     t.integer  "public_id"
@@ -36,8 +36,8 @@ ActiveRecord::Schema.define(version: 20130930153952) do
     t.datetime "updated_at"
   end
 
-  add_index "invitations", ["partner_id"], name: "index_invitations_on_partner_id"
-  add_index "invitations", ["public_id"], name: "index_invitations_on_public_id"
+  add_index "invitations", ["partner_id"], name: "index_invitations_on_partner_id", using: :btree
+  add_index "invitations", ["public_id"], name: "index_invitations_on_public_id", using: :btree
 
   create_table "listables", force: true do |t|
     t.string   "name"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20130930153952) do
     t.datetime "updated_at"
   end
 
-  add_index "lists", ["public_id"], name: "index_lists_on_public_id"
+  add_index "lists", ["public_id"], name: "index_lists_on_public_id", using: :btree
 
   create_table "logins", force: true do |t|
     t.integer  "public_id"
@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 20130930153952) do
     t.datetime "updated_at"
   end
 
-  add_index "logins", ["public_id"], name: "index_logins_on_public_id"
+  add_index "logins", ["public_id"], name: "index_logins_on_public_id", using: :btree
 
   create_table "notices", force: true do |t|
     t.integer  "public_id"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 20130930153952) do
     t.datetime "updated_at"
   end
 
-  add_index "notices", ["public_id"], name: "index_notices_on_public_id"
+  add_index "notices", ["public_id"], name: "index_notices_on_public_id", using: :btree
 
   create_table "offers", force: true do |t|
     t.integer  "public_id"
@@ -95,8 +95,8 @@ ActiveRecord::Schema.define(version: 20130930153952) do
     t.datetime "updated_at"
   end
 
-  add_index "offers", ["partner_id"], name: "index_offers_on_partner_id"
-  add_index "offers", ["public_id"], name: "index_offers_on_public_id"
+  add_index "offers", ["partner_id"], name: "index_offers_on_partner_id", using: :btree
+  add_index "offers", ["public_id"], name: "index_offers_on_public_id", using: :btree
 
   create_table "partner_apps", force: true do |t|
     t.integer  "partner_id"
@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 20130930153952) do
     t.datetime "updated_at"
   end
 
-  add_index "partner_apps", ["partner_id"], name: "index_partner_apps_on_partner_id"
+  add_index "partner_apps", ["partner_id"], name: "index_partner_apps_on_partner_id", using: :btree
 
   create_table "partner_sites", force: true do |t|
     t.integer  "partner_id"
@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(version: 20130930153952) do
     t.datetime "updated_at"
   end
 
-  add_index "partner_sites", ["partner_id"], name: "index_partner_sites_on_partner_id"
+  add_index "partner_sites", ["partner_id"], name: "index_partner_sites_on_partner_id", using: :btree
 
   create_table "partners", force: true do |t|
     t.string   "stormpath_id"
@@ -146,8 +146,8 @@ ActiveRecord::Schema.define(version: 20130930153952) do
     t.datetime "updated_at"
   end
 
-  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true
-  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at"
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
   create_table "site_of_publics", force: true do |t|
     t.integer  "public_id"
@@ -156,8 +156,8 @@ ActiveRecord::Schema.define(version: 20130930153952) do
     t.datetime "updated_at"
   end
 
-  add_index "site_of_publics", ["partner_site_id"], name: "index_site_of_publics_on_partner_site_id"
-  add_index "site_of_publics", ["public_id"], name: "index_site_of_publics_on_public_id"
+  add_index "site_of_publics", ["partner_site_id"], name: "index_site_of_publics_on_partner_site_id", using: :btree
+  add_index "site_of_publics", ["public_id"], name: "index_site_of_publics_on_public_id", using: :btree
 
   create_table "tokens", force: true do |t|
     t.integer  "partner_id"
@@ -168,7 +168,7 @@ ActiveRecord::Schema.define(version: 20130930153952) do
     t.datetime "updated_at"
   end
 
-  add_index "tokens", ["partner_id"], name: "index_tokens_on_partner_id"
+  add_index "tokens", ["partner_id"], name: "index_tokens_on_partner_id", using: :btree
 
   create_table "updates", force: true do |t|
     t.integer  "public_id"
@@ -183,7 +183,7 @@ ActiveRecord::Schema.define(version: 20130930153952) do
     t.datetime "updated_at"
   end
 
-  add_index "updates", ["partner_id"], name: "index_updates_on_partner_id"
-  add_index "updates", ["public_id"], name: "index_updates_on_public_id"
+  add_index "updates", ["partner_id"], name: "index_updates_on_partner_id", using: :btree
+  add_index "updates", ["public_id"], name: "index_updates_on_public_id", using: :btree
 
 end

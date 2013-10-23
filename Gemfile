@@ -51,6 +51,7 @@ group :test, :development do
   	gem 'simplecov', require: false
   	gem "brakeman", require: false
   	gem 'sqlite3'
+  	gem 'jasmine-rails'
 end 
 
 # Use ActiveModel has_secure_password
