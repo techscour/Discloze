@@ -11,8 +11,7 @@ SimpleAuth::Application.configure do
 
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
-  config.action_controller.perform_caching = false
-
+  config.action_controller.perform_caching = true
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
@@ -26,27 +25,6 @@ SimpleAuth::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
-  YAML::ENGINE.yamler = 'syck'
 
-  class Event < ActiveRecord::Base
-    # alias the attributes
-    alias_attribute :x_pos, :x
-    alias_attribute :y_pos, :y
 
-    after_initialize :init
-
-    # after_initialize will still work, with the aliases
-    def init
-      self.x_pos ||= 0
-      self.y_pos ||= 0
-    end
-
-    # override Kernel.y
-    def y; end
-
-    # override self.y_pos to read out of the :attributes, since we blew away :y
-    def y_pos
-      attribute['y']
-    end
-  end
 end

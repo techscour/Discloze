@@ -3,9 +3,10 @@
 <head>
   <title>Welcome to Discloze</title>
   <%= csrf_meta_tags %>
-  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="http://angular-ui.github.com/ng-grid/css/ng-grid.css" />
-  <script src="//code.jquery.com/jquery.js"></script>
+  <link id="page_favicon" href="favicon.ico" rel="icon" type="image/x-icon">
+  <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://angular-ui.github.com/ng-grid/css/ng-grid.css" />
+  <script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
   <style type="text/css">
       body {
@@ -100,13 +101,9 @@
   <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
 
   <script type="text/javascript" src="http://angular-ui.github.com/ng-grid/lib/ng-grid.debug.js"></script>
+  <%= javascript_include_tag "module" %>
   <script type="text/javascript">
-  var theModule = angular.module('theModule', ['ngGrid','ui.bootstrap']).config([
-      "$httpProvider", function($httpProvider) {
-      csrfToken = $('meta[name=csrf-token]').attr('content');
-      $httpProvider.defaults.headers.common['X-CSRF-Token'] = csrfToken;
-     }
-    ]);
+
   </script>
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
