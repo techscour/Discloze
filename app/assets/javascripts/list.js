@@ -111,3 +111,5 @@ var ListController =function($scope, $http) {
         $scope.getNextPage();
       });
   }
+
+  theModule.controller('ListController',ListController);

@@ -1,1 +1,3 @@
-//= require_tree .
+//= require module
+//= require edit
+//= require list

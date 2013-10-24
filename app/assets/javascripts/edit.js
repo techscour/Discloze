@@ -233,7 +233,6 @@
         };
         $scope.$watch('mySelections', function (newVal, oldVal) {
           if (newVal !== oldVal) $scope.selected(); }, true);
-
-
-   
       }
+
+      theModule.controller('EditController',EditController);
