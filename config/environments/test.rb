@@ -33,4 +33,5 @@ SimpleAuth::Application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
+  config.assets.js_compressor = Uglifier.new(:mangle => false)
 end

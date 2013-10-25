@@ -5,16 +5,18 @@ src_dir: "app/assets/javascripts"
  # list of file expressions to include as source files
 # relative path from scr_dir
 src_files:
+ - "cdns.{js,coffee}"
  - "application.{js,coffee}"
  # path to parent directory of spec_files
 # relative path from Rails.root
 # defaults to spec/javascripts
 spec_dir: spec/javascripts
- # list of file expressions to include as helpers into spec runner
+#stylesheets:
+#  - helpers/*.css
+# list of file expressions to include as helpers into spec runner
 # relative path from spec_dir
-helpers:
-  - "helpers/**/*.{js,coffee}"
- # list of file expressions to include as specs into spec runner
+#helpers:
+# list of file expressions to include as specs into spec runner
 # relative path from spec_dir
 spec_files:
   - "**/*[Ss]pec.{js,coffee}"

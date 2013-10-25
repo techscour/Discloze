@@ -1,4 +1,4 @@
-var ListController =function($scope, $http) {
+theListController =function($scope, $http) {
 
       $scope.values = JSON.parse(values);
       $scope.maxSize = parseInt($scope.values.size);
@@ -112,4 +112,4 @@ var ListController =function($scope, $http) {
       });
   }
 
-  theModule.controller('ListController',ListController);
+  theModule.controller('ListController',theListController);

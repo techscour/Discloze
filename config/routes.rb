@@ -60,6 +60,6 @@ SimpleAuth::Application.routes.draw do
     get "authorize", :to=>"api#authorize"
     get "adieu", :to=>"api#adieu"
   end
-
+  mount JasmineRails::Engine => "/specs" if defined?(JasmineRails)
   root "session#landing"
 end

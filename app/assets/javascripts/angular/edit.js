@@ -1,4 +1,4 @@
- var EditController =function($scope, $http) {
+theEditController =function($scope, $http) {
     $scope.values = values
     $scope.visibility = $scope.values.visibility;
     $scope.name = $scope.values.name;
@@ -235,4 +235,4 @@
           if (newVal !== oldVal) $scope.selected(); }, true);
       }
 
-      theModule.controller('EditController',EditController);
+theModule.controller('EditController',theEditController);
