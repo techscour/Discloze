@@ -9,10 +9,5 @@ describe('theModule', function() {
     expect(theModule.name).toBe('theModule');
   });
   
-  it("etc", function() {
-    //expect(throw 'abc';).toThrow('abc');
-    expect(1 + 1).toBe(2);
-  }); 
-
 });
 

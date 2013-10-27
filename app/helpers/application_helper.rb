@@ -1,7 +1,6 @@
 module ApplicationHelper
  
   def angular_grid_simple_helper partial, headline, fetcher, cooker, columns, callbacks={}
-
  
     page = params['page'].to_i
     size = params['size'].to_i 

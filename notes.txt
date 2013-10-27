@@ -2,3 +2,8 @@ jasmine tests:
   RAILS_ENV=test bundle exec rake spec:javascript
 
 angular-mocks crashes phantom js in jasmine tests
+phantomjs needs FreeType, Fontconfig
+
+angular testing
+http://www.benlesh.com/2013/05/angularjs-unit-testing-controllers.html
+

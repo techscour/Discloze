@@ -6,11 +6,12 @@
 }
 </style>
 <script>
-  var values = '<%= raw @values %>';
-  var fat = '<%= form_authenticity_token %>';
+  window.theListValues = JSON.parse('<%= raw @values %>');
+  window.theListValues.fat = '<%= form_authenticity_token %>';
+  console.log(JSON.stringify(window.theListValues));
 </script>
 
-<div class="well" ng-controller='ListController' ng-cloak >
+<div class="well" ng-controller='ListController' ng-cloak id='listwell'>
   <div>
     <h1 style='display:inline-block;'>{{values.header}}
      <input id='btnView' type='button' value='View Selected' ng-click='view()' 

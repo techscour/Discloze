@@ -1,5 +1,5 @@
-theEditController =function($scope, $http) {
-    $scope.values = values
+theEditController =function($scope, $http, $window) {
+    $scope.values = $window.theEditValues;
     $scope.visibility = $scope.values.visibility;
     $scope.name = $scope.values.name;
     $scope.user_id = $scope.values.user_id;

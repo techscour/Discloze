@@ -1,3 +1,3 @@
 //= require angular/module
-//= require angular/edit
-//= require angular/list
+//= require angular/edit_controller
+//= require angular/list_controller

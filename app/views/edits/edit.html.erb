@@ -15,10 +15,11 @@
 </style>
 
 <script>
-  var values = <%= raw @values %>;
+  window.theEditValues =  <%= raw @values %> ;
+  console.log(JSON.stringify(window.theEditValues));
 </script>
 
-<div ng-controller='EditController' ng-cloak >
+<div ng-controller='EditController' ng-cloak id='editwell'>
   <div class="well">
     <div>
       <h1 style='display:inline-block'>{{values.name}}
