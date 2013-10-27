@@ -5,7 +5,6 @@ class CreateListables < ActiveRecord::Migration
       t.string :topic
       t.string :description
       t.text :html
-      t.timestamps
     end
   end
 end

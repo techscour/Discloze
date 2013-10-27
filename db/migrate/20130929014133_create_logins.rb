@@ -4,8 +4,6 @@ class CreateLogins < ActiveRecord::Migration
       t.references :public, index: true
       t.datetime :last_activity
       t.boolean :remember
-
-      t.timestamps
     end
   end
 end

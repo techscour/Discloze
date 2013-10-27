@@ -1,121 +1,110 @@
-theListController =function($scope, $http, $window) {
+theListController =function($s, $h, $w) {
+      $s.values = $w.theListValues
+      $s.maxSize = parseInt($s.values.size);
+      $s.sortInfo = [{ fields:[("'" + $s.values.field + "'")], 
+        directions: [("'" + $s.values.direction+ "'")]}];
+      $s.totalItems = parseInt($s.values.total);
+      $s.currentPage = parseInt($s.values.page);
+      $s.userId = parseInt($s.values.user_id);
+      $s.mySelections = [];
+      $s.useTimeouts = true;
+      $s.authenticity_token = $s.values.fat;
+      $s.alertMessage = 'EMPTY';
+      $s.callbacks = $s.values.callbacks;
 
-      $scope.values = $window.theListValues
-      $scope.maxSize = parseInt($scope.values.size);
-      $scope.sortInfo = [{ fields:[("'" + $scope.values.field + "'")], 
-        directions: [("'" + $scope.values.direction+ "'")]}];
-      $scope.totalItems = parseInt($scope.values.total);
-      $scope.currentPage = parseInt($scope.values.page);
-      $scope.userId = parseInt($scope.values.user_id);
-      $scope.mySelections = [];
-      //$scope.id = -1;
-      $scope.useTimeouts = true;
-      $scope.authenticity_token = $scope.values.fat;
-      $scope.alertMessage = 'EMPTY';
-      $scope.callbacks = $scope.values.callbacks;
+      $s.deleting = !!$s.callbacks['delete'];
+      $s.creating = !!$s.callbacks['create'];
+      $s.editing = !!$s.callbacks['edit'];
 
-      $scope.deleting = !!$scope.callbacks['delete'];
-      $scope.creating = !!$scope.callbacks['create'];
-      $scope.editing = !!$scope.callbacks['edit'];
-
-      $scope.gridOptions = {
+      $s.gridOptions = {
         data: 'theData',
         enablePaging: true,
-        sortinfo: $scope.sortInfo,
+        sortinfo: $s.sortInfo,
         showFooter: false,
         useExternalSorting: true,
-        columnDefs: $scope.values.columns,
-        selectedItems: $scope.mySelections,
+        columnDefs: $s.values.columns,
+        selectedItems: $s.mySelections,
         multiSelect: false,
-        filterOptions: $scope.filterOptions
+        filterOptions: $s.filterOptions
       };
 
-      $scope.theData = $scope.values.data;
-      if (!$scope.$$phase) {
-        $scope.$apply();
+      $s.theData = $s.values.data;
+      if (!$s.$$phase) {
+        $s.$apply();
       }
 
-      $scope.edit = function()
+      $s.edit = function()
       {
-        var id = $scope.mySelections[0].id;
-        $scope.test_location = '/edits/' + id + '/edit';
-        $window.location = '/edits/' + id + '/edit';
+        var id = $s.mySelections[0].id;
+        $s.test_location = '/edits/' + id + '/edit';
+        $w.location = '/edits/' + id + '/edit';
       };
 
-      $scope.delete = function()
+      $s.delete = function()
       {
-        var controller = $scope.callbacks['delete'].controller;
-        var id = $scope.mySelections[0].id;
+        var controller = $s.callbacks['delete'].controller;
+        var id = $s.mySelections[0].id;
         url = '/' + controller + '/' + id;
-        $scope.deleteUrl(url);
+        $s.deleteUrl(url);
       };
-      $scope.create = function()
+      $s.create = function()
       {
-        var controller = $scope.callbacks['create'].controller;
-        var id = $scope.mySelections[0].id;
+        var controller = $s.callbacks['create'].controller;
+        var id = $s.mySelections[0].id;
         url = '/' + controller
-        $scope.createUrl(url,id); 
+        $s.createUrl(url,id); 
       };
-      //$scope.view = function()
-      //{
-        //var html = null;
-        //angular.forEach($scope.theData, function(x) {
-          //if (x.id == $scope.mySelections[0].id) html = x.html;
-          //});
-        //$('#htmlContent').html(html);
-        //$('#emailModal').modal('show');
-      //};
-      $scope.getNextPage = function()
+      $s.getNextPage = function()
       {
-        var size = $scope.maxSize;
-        var page = $scope.currentPage;
-        var field = $scope.gridOptions.ngGrid.config.sortInfo.fields[0];
-        var direction = $scope.gridOptions.ngGrid.config.sortInfo.directions[0];
-        var base = $window.location.toString().split('?', 1);
+        var size = $s.maxSize;
+        var page = $s.currentPage;
+        var field = $s.gridOptions.ngGrid.config.sortInfo.fields[0];
+        var direction = $s.gridOptions.ngGrid.config.sortInfo.directions[0];
+        var base = $w.location.toString().split('?', 1);
         var url = base + '?size=' + size + '&page=' + page + '&field=' + field + '&direction=' + direction;
-        $window.location =  base + '?size=' + size + '&page=' + page + '&field=' + field + '&direction=' + direction;
+        $w.location =  base + '?size=' + size + '&page=' + page + '&field=' + field + '&direction=' + direction;
       };
-      $scope.deleteUrl = function (url) {
+      $s.deleteUrl = function (url) {
           var deleter = function () {
-                $http.delete(url).success(function () {
-                      $scope.alertMessage = 'Deleted';
+                $h.delete(url).success(function () {
+                      $s.alertMessage = 'Deleted';
                       $('#alertModal').modal('show'); 
                   }).error(function(a,b,c) {
-                      $scope.alertMessage = 'Delete Failed';
+                      $s.alertMessage = 'Delete Failed';
                       $('#alertModal').modal('show'); 
                   })
                 };
-          if ($scope.useTimeouts) setTimeout(deleter, 100);
+          if ($s.useTimeouts) setTimeout(deleter, 100);
           else deleter();
       };
-      $scope.createUrl = function (url,data) {
+      $s.createUrl = function (url,data) {
           var creater = function () {
-                $http.post(url,data).success(function (a) {
-                      $scope.alertMessage = a;
+                $h.post(url,data).success(function (a) {
+                      $s.alertMessage = a;
                       $('#alertModal').modal('show'); 
                   }).error(function(a,b,c) {
-                    $scope.alertMessage = a;
+                    $s.alertMessage = a;
                     $('#alertModal').modal('show'); 
                   })
               };
-          if ($scope.useTimeouts) setTimeout(creater, 100);
+          if ($s.useTimeouts) setTimeout(creater, 100);
           else creater();
       };
-      $scope.$watch('maxSize', function (newVal, oldVal) {
-        if (newVal !== oldVal) $scope.getNextPage(); }, true);
+      $s.$watch('maxSize', function (newVal, oldVal) {
+        if (newVal !== oldVal) $s.getNextPage(); }, true);
 
-      $scope.$watch('currentPage', function (newVal, oldVal) {
-        if (newVal !== oldVal) $scope.getNextPage(); }, true);
+      $s.$watch('currentPage', function (newVal, oldVal) {
+        if (newVal !== oldVal) $s.getNextPage(); }, true);
 
-      $scope.$watch('gridOptions.ngGrid.config.sortInfo', function (newVal, oldVal) {
-        if (newVal !== oldVal) $scope.getNextPage(); }, true);
+      $s.$watch('gridOptions.ngGrid.config.sortInfo', function (newVal, oldVal) {
+        if (newVal !== oldVal) $s.getNextPage(); }, true);
 
-      $scope.$watch('mySelections', function (newVal, oldVal) {
+      $s.$watch('mySelections', function (newVal, oldVal) {
         if (newVal !== oldVal) console.log('selection'); }, true);
 
       $('#alertModal').on('hidden', function () {
-        $scope.getNextPage();
+        $s.getNextPage();
       });
   }
-
+  theListController.$inject = ['$scope','$http','$window'];
   theModule.controller('ListController',theListController);

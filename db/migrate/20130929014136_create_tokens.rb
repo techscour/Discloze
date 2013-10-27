@@ -5,8 +5,6 @@ class CreateTokens < ActiveRecord::Migration
       t.string :token_value
       t.datetime :last_login
       t.datetime :last_activity
-
-      t.timestamps
     end
   end
 end

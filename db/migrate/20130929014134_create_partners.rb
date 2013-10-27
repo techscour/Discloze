@@ -5,8 +5,7 @@ class CreatePartners < ActiveRecord::Migration
       t.string :name
       t.string :description
       t.string :url
-	  t.string :html
-      t.timestamps
+	    t.string :html
     end
   end
 end

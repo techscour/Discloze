@@ -14,10 +14,8 @@
 ActiveRecord::Schema.define(version: 20130930153952) do
 
   create_table "app_of_publics", force: true do |t|
-    t.integer  "public_id"
-    t.integer  "partner_app_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "public_id"
+    t.integer "partner_app_id"
   end
 
   add_index "app_of_publics", ["partner_app_id"], name: "index_app_of_publics_on_partner_app_id", using: :btree
@@ -32,20 +30,16 @@ ActiveRecord::Schema.define(version: 20130930153952) do
     t.datetime "posted"
     t.datetime "effective"
     t.datetime "expires"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   add_index "invitations", ["partner_id"], name: "index_invitations_on_partner_id", using: :btree
   add_index "invitations", ["public_id"], name: "index_invitations_on_public_id", using: :btree
 
   create_table "listables", force: true do |t|
-    t.string   "name"
-    t.string   "topic"
-    t.string   "description"
-    t.text     "html"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string "name"
+    t.string "topic"
+    t.string "description"
+    t.text   "html"
   end
 
   create_table "lists", force: true do |t|
@@ -55,8 +49,6 @@ ActiveRecord::Schema.define(version: 20130930153952) do
     t.text     "values"
     t.datetime "last_activity"
     t.datetime "created"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   add_index "lists", ["public_id"], name: "index_lists_on_public_id", using: :btree
@@ -65,8 +57,6 @@ ActiveRecord::Schema.define(version: 20130930153952) do
     t.integer  "public_id"
     t.datetime "last_activity"
     t.boolean  "remember"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   add_index "logins", ["public_id"], name: "index_logins_on_public_id", using: :btree
@@ -76,8 +66,6 @@ ActiveRecord::Schema.define(version: 20130930153952) do
     t.string   "headline"
     t.text     "html"
     t.datetime "posted"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   add_index "notices", ["public_id"], name: "index_notices_on_public_id", using: :btree
@@ -91,52 +79,42 @@ ActiveRecord::Schema.define(version: 20130930153952) do
     t.datetime "posted"
     t.datetime "effective"
     t.datetime "expires"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   add_index "offers", ["partner_id"], name: "index_offers_on_partner_id", using: :btree
   add_index "offers", ["public_id"], name: "index_offers_on_public_id", using: :btree
 
   create_table "partner_apps", force: true do |t|
-    t.integer  "partner_id"
-    t.string   "name"
-    t.string   "description"
-    t.string   "url"
-    t.text     "html"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "partner_id"
+    t.string  "name"
+    t.string  "description"
+    t.string  "url"
+    t.text    "html"
   end
 
   add_index "partner_apps", ["partner_id"], name: "index_partner_apps_on_partner_id", using: :btree
 
   create_table "partner_sites", force: true do |t|
-    t.integer  "partner_id"
-    t.string   "name"
-    t.string   "description"
-    t.string   "url"
-    t.text     "html"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "partner_id"
+    t.string  "name"
+    t.string  "description"
+    t.string  "url"
+    t.text    "html"
   end
 
   add_index "partner_sites", ["partner_id"], name: "index_partner_sites_on_partner_id", using: :btree
 
   create_table "partners", force: true do |t|
-    t.string   "stormpath_id"
-    t.string   "name"
-    t.string   "description"
-    t.string   "url"
-    t.string   "html"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string "stormpath_id"
+    t.string "name"
+    t.string "description"
+    t.string "url"
+    t.string "html"
   end
 
   create_table "publics", force: true do |t|
     t.string   "stormpath_id"
     t.datetime "last_login"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "sessions", force: true do |t|
@@ -150,10 +128,8 @@ ActiveRecord::Schema.define(version: 20130930153952) do
   add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
   create_table "site_of_publics", force: true do |t|
-    t.integer  "public_id"
-    t.integer  "partner_site_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "public_id"
+    t.integer "partner_site_id"
   end
 
   add_index "site_of_publics", ["partner_site_id"], name: "index_site_of_publics_on_partner_site_id", using: :btree
@@ -164,8 +140,6 @@ ActiveRecord::Schema.define(version: 20130930153952) do
     t.string   "token_value"
     t.datetime "last_login"
     t.datetime "last_activity"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   add_index "tokens", ["partner_id"], name: "index_tokens_on_partner_id", using: :btree
@@ -179,8 +153,6 @@ ActiveRecord::Schema.define(version: 20130930153952) do
     t.datetime "posted"
     t.datetime "effective"
     t.datetime "expires"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   add_index "updates", ["partner_id"], name: "index_updates_on_partner_id", using: :btree

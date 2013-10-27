@@ -1,11 +1,11 @@
 GIT
   remote: git://github.com/rails/activerecord-session_store.git
-  revision: 022d45b4ae9b7e862ee92ea8871c9bf4c2d93106
+  revision: a0753820f0032dec7c37441be93ffc76b9dce3d0
   specs:
-    activerecord-session_store (0.0.1)
-      actionpack (>= 4.0.0.beta, < 5)
-      activerecord (>= 4.0.0.beta, < 5)
-      railties (>= 4.0.0.beta, < 5)
+    activerecord-session_store (0.1.0)
+      actionpack (>= 4.0.0, < 5)
+      activerecord (>= 4.0.0, < 5)
+      railties (>= 4.0.0, < 5)
 
 GEM
   remote: https://rubygems.org/
@@ -109,7 +109,7 @@ GEM
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
     fastercsv (1.5.5)
-    ffi (1.9.0)
+    ffi (1.9.1)
     formatador (0.2.4)
     gherkin (2.12.2)
       multi_json (~> 1.3)
@@ -157,7 +157,7 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8.2)
     mime-types (1.25)
-    mini_portile (0.5.1)
+    mini_portile (0.5.2)
     minitest (4.7.5)
     multi_json (1.8.2)
     multi_test (0.0.2)
@@ -180,6 +180,8 @@ GEM
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
     pg (0.17.0)
+    phantomjs-binaries (1.8.1.4)
+      sys-uname (= 0.9.0)
     poltergeist (1.4.1)
       capybara (~> 2.1.0)
       cliver (~> 0.2.1)
@@ -296,6 +298,8 @@ GEM
       multi_json (>= 1.3.6)
       properties-ruby (~> 0.0.4)
       uuidtools (>= 2.1.3)
+    sys-uname (0.9.0)
+      ffi (>= 1.0.0)
     temple (0.6.7)
     terminal-table (1.4.5)
     therubyracer (0.12.0)
@@ -314,9 +318,9 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.38)
-    uglifier (2.2.1)
+    uglifier (2.3.0)
       execjs (>= 0.3.0)
-      multi_json (~> 1.0, >= 1.0.2)
+      json (>= 1.8.0)
     uuidtools (2.1.4)
     websocket-driver (0.3.0)
     xpath (2.0.0)
@@ -345,6 +349,7 @@ DEPENDENCIES
   newrelic_rpm (>= 3.6.8.164)
   omniauth-facebook
   pg
+  phantomjs-binaries (~> 1.8.1.4)
   poltergeist
   pry
   pry-rescue

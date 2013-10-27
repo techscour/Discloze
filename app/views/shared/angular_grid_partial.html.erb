@@ -8,7 +8,7 @@
 <script>
   window.theListValues = JSON.parse('<%= raw @values %>');
   window.theListValues.fat = '<%= form_authenticity_token %>';
-  console.log(JSON.stringify(window.theListValues));
+  //console.log(JSON.stringify(window.theListValues));
 </script>
 
 <div class="well" ng-controller='ListController' ng-cloak id='listwell'>
@@ -17,8 +17,6 @@
      <input id='btnView' type='button' value='View Selected' ng-click='view()' 
       ng-show='!!theData[0].html' ng-disabled='!mySelections[0].id' class='btn btn-warning'
       style='display:inline-block;'>
-     <!--<input id='btnAdd' type='button' value='Add Selected' ng-click='add()' ng-show='adding' 
-      ng-disabled='!mySelections[0].id' class='btn btn-success' style='display:inline-block;'>-->
      <input id='btnDelete' type='button' value='Delete Selected' ng-click='delete()' 
       ng-show='deleting' ng-disabled='!mySelections[0].id' class='btn btn-danger' 
       style='display:inline-block;'>

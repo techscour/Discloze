@@ -7,8 +7,6 @@ class CreateLists < ActiveRecord::Migration
       t.text :values
       t.datetime :last_activity
       t.datetime :created
-
-      t.timestamps
     end
   end
 end

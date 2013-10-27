@@ -52,6 +52,7 @@ group :test, :development do
   	gem "brakeman", require: false
   	gem 'sqlite3'
   	gem 'jasmine-rails'
+	gem "phantomjs-binaries", "~> 1.8.1.4"
 end 
 
 # Use ActiveModel has_secure_password

@@ -6,7 +6,6 @@ class CreatePartnerApps < ActiveRecord::Migration
       t.string :description
       t.string :url
       t.text :html
-      t.timestamps
     end
   end
 end

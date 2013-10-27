@@ -1,178 +1,179 @@
-theEditController =function($scope, $http, $window) {
-    $scope.values = $window.theEditValues;
-    $scope.visibility = $scope.values.visibility;
-    $scope.name = $scope.values.name;
-    $scope.user_id = $scope.values.user_id;
-    $scope.id = $scope.values.id
-    $scope.rating = 5;
-    $scope.item = '';
-    $scope.item_dirty = false;
-    $scope.rating_dirty = false;
-    $scope.editing = false;
-    $scope.duplicate = false;
-    $scope.alertMessage = '';
-    $scope.edits = 0;
-    $scope.mail_to = '';
-    $scope.subject = '';
-    $scope.body = '';
-    $scope.mySelections = [];
-    $scope.columns = [  
+theEditController =function($s, $h, $w) {
+    $s.values = $w.theEditValues;
+    $s.visibility = $s.values.visibility;
+    $s.name = $s.values.name;
+    $s.user_id = $s.values.user_id;
+    $s.id = $s.values.id
+    $s.rating = 5;
+    $s.item = '';
+    $s.item_dirty = false;
+    $s.rating_dirty = false;
+    $s.editing = false;
+    $s.duplicate = false;
+    $s.alertMessage = '';
+    $s.edits = 0;
+    $s.mail_to = '';
+    $s.subject = '';
+    $s.body = '';
+    $s.mySelections = [];
+    $s.useTimouts = true;
+    $s.columns = [  
       {field:'rating', displayName: 'Rating'},
       {field:'item', displayName: 'Item'}
     ];
-    $scope.sortInfo = [{ fields:[('item')], directions: [('asc')]}];
+    $s.sortInfo = [{ fields:[('item')], directions: [('asc')]}];
 
-    $scope.theData = JSON.parse($scope.values.data);
-    if (!$scope.$$phase) {
-      $scope.$apply();
+    $s.theData = JSON.parse($s.values.data);
+    if (!$s.$$phase) {
+      $s.$apply();
     }
 
-    $scope.gridOptions = {
+    $s.gridOptions = {
       data: 'theData',
-      columnDefs: $scope.columns,
-      selectedItems: $scope.mySelections,
+      columnDefs: $s.columns,
+      selectedItems: $s.mySelections,
       multiSelect: false
     };
 
-    $scope.rating_change = function()
+    $s.rating_change = function()
     {
-      $scope.rating_dirty = true;
+      $s.rating_dirty = true;
     };
 
-    $scope.item_change = function()
+    $s.item_change = function()
     {
-      $scope.item_dirty = true;
-      $scope.editing = false;
-      $scope.duplicate = false;
+      $s.item_dirty = true;
+      $s.editing = false;
+      $s.duplicate = false;
     };
 
-    $scope.selected = function()
+    $s.selected = function()
     {
-      $scope.item = $scope.mySelections[0].item;
-      $scope.rating = $scope.mySelections[0].rating;
-      $scope.editing = true;
-      $scope.rating_dirty = false;
-      $scope.item_dirty = false;
+      $s.item = $s.mySelections[0].item;
+      $s.rating = $s.mySelections[0].rating;
+      $s.editing = true;
+      $s.rating_dirty = false;
+      $s.item_dirty = false;
     };
 
-    $scope.destroy = function()
+    $s.destroy = function()
     {
-      var url = '/lists/' + $scope.id;
-      $scope.deleteUrl(url);
+      var url = '/lists/' + $s.id;
+      $s.deleteUrl(url);
     };
 
-    $scope.save = function()
+    $s.save = function()
     {
-      var saved = { name: $scope.name, visibility: $scope.visibility, 
-        values: $scope.theData};
-        var url = '/lists/' + $scope.id;
-        $scope.putUrl(url,saved);
-        $scope.edits = 0;
-        window.onbeforeunload = null;
+      var saved = { name: $s.name, visibility: $s.visibility, 
+        values: $s.theData};
+        var url = '/lists/' + $s.id;
+        $s.putUrl(url,saved);
+        $s.edits = 0;
+        $w.onbeforeunload = null;
       };
 
-      $scope.cancel = function()
+      $s.cancel = function()
       {
         $('#emailModal').modal('hide');
-         window.onbeforeunload = null;
+         $w.onbeforeunload = null;
       };
 
-      $scope.send = function()
+      $s.send = function()
       {
-        var mail = {mail_to: $scope.mail_to, subject: $scope.subject, body: $scope.message,
-          list: $scope.name, visibility: $scope.visibility, data: $scope.data};
+        var mail = {mail_to: $s.mail_to, subject: $s.subject, body: $s.message,
+          list: $s.name, visibility: $s.visibility, data: $s.data};
           var url = '/session/mail';
           $('#emailModal').modal('hide');
-          window.onbeforeunload = null;
-          $scope.postUrl(url,mail); 
+          $w.onbeforeunload = null;
+          $s.postUrl(url,mail); 
         };
 
-        $scope.email = function()
+        $s.email = function()
         {
-          $scope.clearEmailForm();
-          $scope.subject = 'My ' + $scope.name + ' List';
+          $s.clearEmailForm();
+          $s.subject = 'My ' + $s.name + ' List';
           $('#emailModal').modal('show');
         };
 
-        $scope.download = function()
+        $s.download = function()
         {
-          var url = '/session/download?name='+ $scope.name;
-          window.location = url;
+          var url = '/session/download?name='+ $s.name;
+          $w.location = url;
         };
-        $scope.clearEmailForm = function()
+        $s.clearEmailForm = function()
         {
-          $scope.mail_to = '';
-          $scope.subject = '';
-          $scope.message = '';
-          $scope.clearForm($scope.emailForm,'#emailForm');
-          $scope.clearField($scope.emailForm.mail_to,'#mail_to');
-          $scope.clearField($scope.emailForm.subject,'#subject');
-          $scope.clearField($scope.emailForm.message,'#message');
+          $s.mail_to = '';
+          $s.subject = '';
+          $s.message = '';
+          $s.clearForm($s.emailForm,'#emailForm');
+          $s.clearField($s.emailForm.mail_to,'#mail_to');
+          $s.clearField($s.emailForm.subject,'#subject');
+          $s.clearField($s.emailForm.message,'#message');
         };
 
-        $scope.add = function()
+        $s.add = function()
         {
-         var index = $scope.find();
+         var index = $s.find();
          if (index != -1)
          {
-          $scope.duplicate = true;
+          $s.duplicate = true;
           return; 
         }
-        var added = {item: $scope.item, rating: parseInt($scope.rating)};
-        $scope.theData.unshift(added);
-        $scope.edits += 1;
-        if ($scope.edits == 1) {
-          window.onbeforeunload = function(e) {
+        var added = {item: $s.item, rating: parseInt($s.rating)};
+        $s.theData.unshift(added);
+        $s.edits += 1;
+        if ($s.edits == 1) {
+          $w.onbeforeunload = function(e) {
+            return 'You have unsaved list edits.';
+          };
+        }
+        $s.clear_item_form();
+      };
+
+      $s.update = function()
+      {
+        var index = $s.find();
+        var element = $s.theData[index];
+        element.item = $s.item;
+        element.rating = parseInt($s.rating);
+        $s.edits += 1;
+        if ($s.edits == 1) {
+
+          $w.onbeforeunload = function(e) {
             return 'Dialog text here.';
           };
         }
-        $scope.clear_item_form();
       };
 
-      $scope.update = function()
+      $s.find = function() 
       {
-        var index = $scope.find();
-        var element = $scope.theData[index];
-        element.item = $scope.item;
-        element.rating = parseInt($scope.rating);
-        $scope.edits += 1;
-        if ($scope.edits == 1) {
-
-          window.onbeforeunload = function(e) {
-            return 'Dialog text here.';
-          };
-        }
-      };
-
-      $scope.find = function() 
-      {
-        for (i in $scope.theData)
+        for (i in $s.theData)
         {
-          if ($scope.theData[i].item == $scope.item) return i;
+          if ($s.theData[i].item == $s.item) return i;
         }
         return -1;
       };
 
-      $scope.delete = function()
+      $s.delete = function()
       {
-        var index = $scope.find();
-        $scope.theData.splice(index, 1);
-        $scope.clear();
+        var index = $s.find();
+        $s.theData.splice(index, 1);
+        $s.clear();
       };
 
-      $scope.clear_item_form = function()
+      $s.clear_item_form = function()
       {
-        $scope.rating = 5;
-        $scope.item = '';
-        $scope.clearForm($scope.itemForm,'#itemForm');
-        $scope.clearField($scope.itemForm.item,'#item');
-        $scope.editing = false;
-        $scope.rating_dirty = false;
-        $scope.duplicate = false;
-        $scope.item_dirty = false;
+        $s.rating = 5;
+        $s.item = '';
+        $s.clearForm($s.itemForm,'#itemForm');
+        $s.clearField($s.itemForm.item,'#item');
+        $s.editing = false;
+        $s.rating_dirty = false;
+        $s.duplicate = false;
+        $s.item_dirty = false;
       };
 
-      $scope.clearForm = function(form, formSelector)
+      $s.clearForm = function(form, formSelector)
       {
         $(formSelector).addClass('ng-pristine');
         $(formSelector).removeClass('ng-dirty');
@@ -182,7 +183,7 @@ theEditController =function($scope, $http, $window) {
         form.$invalid = false;
       };
 
-      $scope.clearField = function(field, fieldSelector)
+      $s.clearField = function(field, fieldSelector)
       {
         $(fieldSelector).addClass('ng-pristine');
         $(fieldSelector).removeClass('ng-dirty');
@@ -192,47 +193,51 @@ theEditController =function($scope, $http, $window) {
         field.$invalid = false;
       };
 
-      $scope.deleteUrl = function (url) {
-          //alert(url);
-          setTimeout(function () {
-            $http.delete(url).success(function (a) {
-              $scope.alertMessage = 'Deleted';
+      $s.deleteUrl = function (url) {
+          var deleter = function () {
+            $h.delete(url).success(function (a) {
+              $s.alertMessage = 'Deleted';
               $('#alertModal').modal('show'); 
-              window.onbeforeunload = null;
-              window.location = values.root_url;
+              $w.onbeforeunload = null;
+              $w.location = '/';
             }).error(function(a) {
-              $scope.alertMessage = 'Delete Failed';
+              $s.alertMessage = 'Delete Failed';
               $('#alertModal').modal('show'); 
             })
-          }, 100);
+          };
+          if ($s.useTimeouts) setTimeout(deleter, 100);
+          else deleter();
         };
-        $scope.putUrl = function (url,data) {
-          setTimeout(function () {
-            $http.put(url,data).success(function () {
-              $scope.alertMessage = 'Updated';
+        $s.putUrl = function (url,data) {
+          var putter = function () {
+            $h.put(url,data).success(function () {
+              $s.alertMessage = 'Updated';
               $('#alertModal').modal('show'); 
-              window.onbeforeunload = null;
+              $w.onbeforeunload = null;
             }).error(function(a,b,c) {
-              $scope.alertMessage = 'Update Failed';
+              $s.alertMessage = 'Update Failed';
               $('#alertModal').modal('show'); 
             })
-          }, 100);
+          };
+          if ($s.useTimeouts) setTimeout(putter, 100);
+          else putter();
         };
-        $scope.postUrl = function (url,data) {
-          //alert([url,data]);
-          setTimeout(function () {
-            $http.post(url,data).success(function () {
-              $scope.alertMessage = 'Success';
+        $s.postUrl = function (url,data) {
+          var poster = function () {
+            $h.post(url,data).success(function () {
+              $s.alertMessage = 'Success';
               $('#alertModal').modal('show'); 
-              window.onbeforeunload = null;
+              $w.onbeforeunload = null;
             }).error(function(a,b,c) {
-              $scope.alertMessage = 'Failed';
+              $s.alertMessage = 'Failed';
               $('#alertModal').modal('show'); 
             })
-          }, 100);
+          };
+          if ($s.useTimeouts) setTimeout(poster, 100);
+          else poster();
         };
-        $scope.$watch('mySelections', function (newVal, oldVal) {
-          if (newVal !== oldVal) $scope.selected(); }, true);
-      }
-
+        $s.$watch('mySelections', function (newVal, oldVal) {
+          if (newVal !== oldVal) $s.selected(); }, true);
+    }
+theEditController.$inject = ['$scope','$http','$window']
 theModule.controller('EditController',theEditController);

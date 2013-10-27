@@ -92,8 +92,6 @@ FactoryGirl.define do
 	factory :site_of_public do
 		public
 		partner_site
-		created_at  Time.now.utc
-		updated_at  Time.now.utc
 	end
 
 	factory :token do

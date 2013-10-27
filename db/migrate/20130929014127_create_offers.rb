@@ -9,8 +9,6 @@ class CreateOffers < ActiveRecord::Migration
       t.datetime :posted
       t.datetime :effective
       t.datetime :expires
-
-      t.timestamps
     end
   end
 end

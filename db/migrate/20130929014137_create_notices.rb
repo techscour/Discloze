@@ -5,8 +5,6 @@ class CreateNotices < ActiveRecord::Migration
       t.string :headline
       t.text :html
       t.datetime :posted
-
-      t.timestamps
     end
   end
 end
